@@ -43,6 +43,7 @@ services:
     command: tail -f /dev/null  # Keeps container running
     volumes:
       - wordpress:/var/www/html
+      - ./pricing-table-plugin:/var/www/html/wp-content/plugins/pricing-table-plugin
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: exampleuser

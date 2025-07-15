@@ -13,6 +13,17 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
+    - name: Start Docker Compose services
+      run: docker compose --profile cli up -d
+    - name: Wait for WordPress to be ready
+      run: |
+        timeout 300 bash -c 'until curl -f http://localhost:8080; do sleep 5; done'
+    - name: Setup WordPress
+      run: |
+        docker compose exec -T wpcli bash -c "
+          wp core install --url=http://localhost:8080 --title='Test Site' --admin_user=admin --admin_password=admin123 --admin_email=admin@example.com --allow-root --path=/var/www/html
+          wp plugin activate pricing-table-plugin --allow-root --path=/var/www/html
+        "
     - name: Install dependencies
       working-directory: ./pricing-table-plugin
       run: npm ci

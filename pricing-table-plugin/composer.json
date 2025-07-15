@@ -1,9 +1,9 @@
 {
-  "name": "marcin-wosinek/wp-plugin-scaffold",
+  "name": "marcin-wosinek/pricing-table-plugin",
   "description": "TODO The description for the plugin scaffolded by this repository.",
   "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/marcin-wosinek/wp-plugin-scaffold/",
+  "homepage": "https://github.com/marcin-wosinek/pricing-table-plugin/",
   "authors": [
     {
       "name": "Tom McFarlin",
@@ -17,7 +17,7 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/marcin-wosinek/wp-plugin-scaffold/issues"
+    "issues": "https://github.com/marcin-wosinek/pricing-table-plugin/issues"
   },
   "config": {
     "preferred-install": "dist",

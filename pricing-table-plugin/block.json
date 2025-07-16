@@ -25,7 +25,9 @@
             "1 User",
             "10GB Storage",
             "Email Support"
-          ]
+          ],
+          "buttonLabel": "Get Started",
+          "buttonUrl": ""
         },
         {
           "name": "Pro",
@@ -36,7 +38,9 @@
             "100GB Storage",
             "Priority Support",
             "Advanced Analytics"
-          ]
+          ],
+          "buttonLabel": "Choose Pro",
+          "buttonUrl": ""
         }
       ],
       "items": {
@@ -57,6 +61,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "buttonLabel": {
+            "type": "string",
+            "default": "Get Started"
+          },
+          "buttonUrl": {
+            "type": "string",
+            "default": ""
           }
         }
       }

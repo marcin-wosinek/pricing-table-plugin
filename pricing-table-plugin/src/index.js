@@ -4,7 +4,7 @@
 
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import { useBlockProps, RichText, PlainText } from "@wordpress/block-editor";
+import { useBlockProps, RichText, PlainText, URLInputButton } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import "./style.scss";
 
@@ -72,6 +72,18 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       setAttributes({ tiers: updatedTiers });
     };
 
+    const updateTierButtonLabel = (index, newLabel) => {
+      const updatedTiers = [...tiers];
+      updatedTiers[index] = { ...updatedTiers[index], buttonLabel: newLabel };
+      setAttributes({ tiers: updatedTiers });
+    };
+
+    const updateTierButtonUrl = (index, newUrl) => {
+      const updatedTiers = [...tiers];
+      updatedTiers[index] = { ...updatedTiers[index], buttonUrl: newUrl };
+      setAttributes({ tiers: updatedTiers });
+    };
+
     return (
       <div {...blockProps}>
         <div className="pricing-table">
@@ -133,6 +145,20 @@ registerBlockType("pricing-table-plugin/pricing-table", {
               >
                 {__("Add Feature", "pricing-table-plugin")}
               </Button>
+              <div className="tier-action">
+                <PlainText
+                  className="button-label"
+                  value={tier.buttonLabel || "Get Started"}
+                  onChange={(value) => updateTierButtonLabel(index, value)}
+                  placeholder="Button text..."
+                />
+                <URLInputButton
+                  url={tier.buttonUrl || ""}
+                  onChange={(url) => updateTierButtonUrl(index, url)}
+                  text={tier.buttonLabel || "Get Started"}
+                  className="action-button-input"
+                />
+              </div>
             </div>
           ))}
         </div>
@@ -166,6 +192,18 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                     </li>
                   ))}
                 </ul>
+              )}
+              {tier.buttonLabel && (
+                <div className="tier-action">
+                  <a
+                    href={tier.buttonUrl || "#"}
+                    className="action-button"
+                    target={tier.buttonUrl ? "_blank" : undefined}
+                    rel={tier.buttonUrl ? "noopener noreferrer" : undefined}
+                  >
+                    {tier.buttonLabel}
+                  </a>
+                </div>
               )}
             </div>
           ))}

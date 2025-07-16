@@ -1,6 +1,26 @@
 # Pricing Table Plugin
 
-The description for the plugin scaffolded by this repository.
+A WordPress plugin for creating pricing tables with the following key components:
+
+## Project Structure
+- `plugin.php` - Main plugin file registering the block
+- `block/` - Contains the block implementation (script.js, style.css, block.json)
+- `tests/` - Playwright e2e tests
+- `compose.yml` - Docker setup for development
+
+## Current State
+- Basic block placeholder showing "Pricing Table" 
+- Uses WordPress Block API v3
+- Configured for e2e testing with Playwright
+- Development environment via Docker (localhost:8080)
+
+## Key Files
+- `plugin.php:20` - Block registration
+- `block/script.js:8` - Block definition with placeholder
+- `block/style.css:5` - Basic placeholder styling
+- `playwright.config.js:22` - Test configuration targeting localhost:8080
+
+The plugin is in early development with just a basic placeholder block.
 
 ## Development
 

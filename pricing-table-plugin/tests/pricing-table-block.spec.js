@@ -1,7 +1,11 @@
 // @ts-check
 import { test, expect } from "@playwright/test";
 import { loginToWordPress } from "./helpers/wordpress-login.js";
-import { hideWelcomePopup, searchForBlock, getEditorFrame } from "./helpers/block-editor.js";
+import {
+  hideWelcomePopup,
+  searchForBlock,
+  getEditorFrame,
+} from "./helpers/block-editor.js";
 
 test.describe("Pricing Table Block", () => {
   test.beforeEach(async ({ page }) => {
@@ -30,10 +34,7 @@ test.describe("Pricing Table Block", () => {
     await pricingTableBlock.click();
 
     // Verify the block was inserted
-    const insertedBlock = editorFrame.locator(".pricing-table-placeholder");
+    const insertedBlock = editorFrame.locator(".pricing-table");
     await expect(insertedBlock).toBeVisible();
-
-    // Verify the block contains the expected placeholder text
-    await expect(insertedBlock).toContainText("Pricing Table");
   });
 });

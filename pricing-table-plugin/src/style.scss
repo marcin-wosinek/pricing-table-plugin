@@ -41,6 +41,57 @@
   margin-bottom: 1rem;
 }
 
+.tier-features {
+  margin-top: 1rem;
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    .components-plain-text {
+      flex: 1;
+      border: 1px solid transparent;
+      padding: 2px 4px;
+      border-radius: 3px;
+      background: transparent;
+
+      &:hover {
+        border-color: currentColor;
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: currentColor;
+        background-color: transparent;
+        box-shadow: 0 0 0 1px currentColor;
+      }
+    }
+
+    .remove-feature {
+      color: #cc1818;
+      min-width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      
+      &:hover {
+        background-color: #cc1818;
+        color: white;
+      }
+    }
+  }
+
+  .add-feature {
+    margin-top: 0.5rem;
+  }
+}
+
 .tier-price {
   .currency {
     border: 1px solid transparent;

@@ -5,6 +5,7 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
 import { useBlockProps, RichText, PlainText } from "@wordpress/block-editor";
+import { Button } from "@wordpress/components";
 import "./style.scss";
 
 registerBlockType("pricing-table-plugin/pricing-table", {
@@ -35,6 +36,28 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       const updatedTiers = [...tiers];
       const numericPrice = parseFloat(newPrice) || 0;
       updatedTiers[index] = { ...updatedTiers[index], price: numericPrice };
+      setAttributes({ tiers: updatedTiers });
+    };
+
+    const updateTierFeature = (tierIndex, featureIndex, newFeature) => {
+      const updatedTiers = [...tiers];
+      const updatedFeatures = [...updatedTiers[tierIndex].features];
+      updatedFeatures[featureIndex] = newFeature;
+      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
+      setAttributes({ tiers: updatedTiers });
+    };
+
+    const addTierFeature = (tierIndex) => {
+      const updatedTiers = [...tiers];
+      const updatedFeatures = [...(updatedTiers[tierIndex].features || []), ""];
+      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
+      setAttributes({ tiers: updatedTiers });
+    };
+
+    const removeTierFeature = (tierIndex, featureIndex) => {
+      const updatedTiers = [...tiers];
+      const updatedFeatures = updatedTiers[tierIndex].features.filter((_, index) => index !== featureIndex);
+      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
       setAttributes({ tiers: updatedTiers });
     };
 
@@ -71,6 +94,33 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                   placeholder="0.00"
                 />
               </div>
+              <div className="tier-features">
+                {(tier.features || []).map((feature, featureIndex) => (
+                  <div key={featureIndex} className="feature-item">
+                    <PlainText
+                      value={feature}
+                      onChange={(value) => updateTierFeature(index, featureIndex, value)}
+                      placeholder="Enter feature..."
+                    />
+                    <Button
+                      onClick={() => removeTierFeature(index, featureIndex)}
+                      className="remove-feature"
+                      isSmall
+                      variant="secondary"
+                    >
+                      ×
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  variant="secondary"
+                  onClick={() => addTierFeature(index)}
+                  className="add-feature"
+                  isSmall
+                >
+                  {__("Add Feature", "pricing-table-plugin")}
+                </Button>
+              </div>
             </div>
           ))}
         </div>
@@ -96,6 +146,15 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                 <span className="currency">{currency}</span>
                 <span className="price">{tier.price}</span>
               </div>
+              {tier.features && tier.features.length > 0 && (
+                <ul className="tier-features">
+                  {tier.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className="feature-item">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           ))}
         </div>

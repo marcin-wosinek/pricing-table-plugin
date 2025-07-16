@@ -31,6 +31,12 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       setAttributes({ tiers: updatedTiers });
     };
 
+    const updateTierPrice = (index, newPrice) => {
+      const updatedTiers = [...tiers];
+      updatedTiers[index] = { ...updatedTiers[index], price: newPrice };
+      setAttributes({ tiers: updatedTiers });
+    };
+
     return (
       <div {...blockProps}>
         <div className="pricing-table">
@@ -57,7 +63,12 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                   onChange={updateCurrency}
                   placeholder="$"
                 />
-                <span className="price">{tier.price}</span>
+                <PlainText
+                  className="price"
+                  value={tier.price}
+                  onChange={(value) => updateTierPrice(index, value)}
+                  placeholder="0.00"
+                />
               </div>
             </div>
           ))}

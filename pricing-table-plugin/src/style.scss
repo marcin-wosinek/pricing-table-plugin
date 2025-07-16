@@ -45,23 +45,23 @@
 
 .tier-price {
   .currency {
-    &[contenteditable="true"] {
-      cursor: text;
-      border: 1px solid transparent;
-      padding: 2px 4px;
-      border-radius: 3px;
-      
-      &:hover {
-        border-color: currentColor;
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-      
-      &:focus {
-        outline: none;
-        border-color: currentColor;
-        background-color: transparent;
-        box-shadow: 0 0 0 1px currentColor;
-      }
+    border: 1px solid transparent;
+    padding: 2px 4px;
+    border-radius: 3px;
+    background: transparent;
+    width: 3ch;
+    min-width: 3ch;
+    
+    &:hover {
+      border-color: currentColor;
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: currentColor;
+      background-color: transparent;
+      box-shadow: 0 0 0 1px currentColor;
     }
   }
 }

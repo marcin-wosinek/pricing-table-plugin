@@ -4,7 +4,7 @@
 
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import { useBlockProps, RichText } from "@wordpress/block-editor";
+import { useBlockProps, RichText, PlainText } from "@wordpress/block-editor";
 import "./style.scss";
 
 registerBlockType("pricing-table-plugin/pricing-table", {
@@ -58,20 +58,12 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                 placeholder="Enter tier description..."
               />
               <div className="tier-price">
-                <span
+                <PlainText
                   className="currency"
-                  contentEditable="true"
-                  suppressContentEditableWarning={true}
-                  onBlur={(e) => updateCurrency(e.target.textContent)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      e.target.blur();
-                    }
-                  }}
-                >
-                  {currency}
-                </span>
+                  value={currency}
+                  onChange={updateCurrency}
+                  placeholder="$"
+                />
                 <span className="price">{tier.price}</span>
               </div>
             </div>

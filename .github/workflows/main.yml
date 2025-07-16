@@ -37,6 +37,18 @@ jobs:
       working-directory: ./pricing-table-plugin
       run: composer install --prefer-dist --no-progress
 
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    - name: Install Node.js dependencies
+      working-directory: ./pricing-table-plugin
+      run: npm ci
+
+    - name: Build block assets
+      working-directory: ./pricing-table-plugin
+      run: npm run build
+
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:

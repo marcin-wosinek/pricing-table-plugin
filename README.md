@@ -24,11 +24,28 @@ The plugin is in early development with just a basic placeholder block.
 
 ## Development
 
+### Build Process
+
+The block source code is in `pricing-table-plugin/block/src/` and gets built to `pricing-table-plugin/block/build/` using Vite.
+
+Available scripts:
+- `npm run build` - Build block assets for production
+- `npm run dev` - Build block assets in watch mode for development
+
+### Local Development
+
 Use docker compose with:
 
 * `docker compose up`. It spins up:
   * localhost:8080 with the WordPress,
   * localhost:8081 with phpMyAdmin
+
+Before running tests or using the plugin, make sure to build the block assets:
+```bash
+cd pricing-table-plugin
+npm install
+npm run build
+```
 
 ## Installation
 

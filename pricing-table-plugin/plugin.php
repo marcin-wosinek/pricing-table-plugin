@@ -27,7 +27,7 @@ function register_pricing_table_block() {
 function enqueue_block_assets() {
     wp_enqueue_script(
         'pricing-table-block',
-        plugin_dir_url( __FILE__ ) . 'block/script.js',
+        plugin_dir_url( __FILE__ ) . 'block/build/script.js',
         array( 'wp-blocks', 'wp-element' ),
         '1.0.0',
         true
@@ -35,7 +35,7 @@ function enqueue_block_assets() {
     
     wp_enqueue_style(
         'pricing-table-block',
-        plugin_dir_url( __FILE__ ) . 'block/style.css',
+        plugin_dir_url( __FILE__ ) . 'block/build/style.css',
         array(),
         '1.0.0'
     );

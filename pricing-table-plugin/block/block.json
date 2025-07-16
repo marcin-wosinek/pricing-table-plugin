@@ -10,6 +10,6 @@
     "html": false
   },
   "textdomain": "pricing-table-plugin",
-  "script": "file:./script.js",
-  "style": "file:./style.css"
+  "script": "file:./build/script.js",
+  "style": "file:./build/style.css"
 }

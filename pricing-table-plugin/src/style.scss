@@ -23,12 +23,12 @@
   padding: 2px 4px;
   border-radius: 3px;
   background: transparent;
-  
+
   &:hover {
     border-color: currentColor;
     background-color: rgba(0, 0, 0, 0.05);
   }
-  
+
   &:focus {
     outline: none;
     border-color: currentColor;
@@ -45,13 +45,11 @@
   margin-top: 1rem;
 
   .feature-item {
-    display: flex;
-    align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
 
-    .components-plain-text {
-      flex: 1;
+    .block-editor-plain-text {
+      width: calc(100% - 2em);
       border: 1px solid transparent;
       padding: 2px 4px;
       border-radius: 3px;
@@ -74,12 +72,9 @@
       color: #cc1818;
       min-width: 24px;
       height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-size: 16px;
       line-height: 1;
-      
+
       &:hover {
         background-color: #cc1818;
         color: white;
@@ -87,8 +82,12 @@
     }
   }
 
-  .add-feature {
+  .add-feature-container {
     margin-top: 0.5rem;
+
+    .add-feature {
+      // Any specific styling for the add button
+    }
   }
 }
 
@@ -100,12 +99,12 @@
     background: transparent;
     width: 3ch;
     min-width: 3ch;
-    
+
     &:hover {
       border-color: currentColor;
       background-color: rgba(0, 0, 0, 0.05);
     }
-    
+
     &:focus {
       outline: none;
       border-color: currentColor;
@@ -119,12 +118,12 @@
     padding: 2px 4px;
     border-radius: 3px;
     background: transparent;
-    
+
     &:hover {
       border-color: currentColor;
       background-color: rgba(0, 0, 0, 0.05);
     }
-    
+
     &:focus {
       outline: none;
       border-color: currentColor;

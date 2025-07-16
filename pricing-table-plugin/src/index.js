@@ -43,21 +43,32 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       const updatedTiers = [...tiers];
       const updatedFeatures = [...updatedTiers[tierIndex].features];
       updatedFeatures[featureIndex] = newFeature;
-      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
+      updatedTiers[tierIndex] = {
+        ...updatedTiers[tierIndex],
+        features: updatedFeatures,
+      };
       setAttributes({ tiers: updatedTiers });
     };
 
     const addTierFeature = (tierIndex) => {
       const updatedTiers = [...tiers];
       const updatedFeatures = [...(updatedTiers[tierIndex].features || []), ""];
-      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
+      updatedTiers[tierIndex] = {
+        ...updatedTiers[tierIndex],
+        features: updatedFeatures,
+      };
       setAttributes({ tiers: updatedTiers });
     };
 
     const removeTierFeature = (tierIndex, featureIndex) => {
       const updatedTiers = [...tiers];
-      const updatedFeatures = updatedTiers[tierIndex].features.filter((_, index) => index !== featureIndex);
-      updatedTiers[tierIndex] = { ...updatedTiers[tierIndex], features: updatedFeatures };
+      const updatedFeatures = updatedTiers[tierIndex].features.filter(
+        (_, index) => index !== featureIndex,
+      );
+      updatedTiers[tierIndex] = {
+        ...updatedTiers[tierIndex],
+        features: updatedFeatures,
+      };
       setAttributes({ tiers: updatedTiers });
     };
 
@@ -94,12 +105,14 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                   placeholder="0.00"
                 />
               </div>
-              <div className="tier-features">
+              <ul className="tier-features">
                 {(tier.features || []).map((feature, featureIndex) => (
-                  <div key={featureIndex} className="feature-item">
+                  <li key={featureIndex} className="feature-item">
                     <PlainText
                       value={feature}
-                      onChange={(value) => updateTierFeature(index, featureIndex, value)}
+                      onChange={(value) =>
+                        updateTierFeature(index, featureIndex, value)
+                      }
                       placeholder="Enter feature..."
                     />
                     <Button
@@ -110,17 +123,16 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                     >
                       ×
                     </Button>
-                  </div>
+                  </li>
                 ))}
-                <Button
-                  variant="secondary"
-                  onClick={() => addTierFeature(index)}
-                  className="add-feature"
-                  isSmall
-                >
-                  {__("Add Feature", "pricing-table-plugin")}
-                </Button>
-              </div>
+              </ul>
+              <Button
+                variant="secondary"
+                onClick={() => addTierFeature(index)}
+                className="add-feature"
+              >
+                {__("Add Feature", "pricing-table-plugin")}
+              </Button>
             </div>
           ))}
         </div>

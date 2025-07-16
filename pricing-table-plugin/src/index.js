@@ -33,7 +33,8 @@ registerBlockType("pricing-table-plugin/pricing-table", {
 
     const updateTierPrice = (index, newPrice) => {
       const updatedTiers = [...tiers];
-      updatedTiers[index] = { ...updatedTiers[index], price: newPrice };
+      const numericPrice = parseFloat(newPrice) || 0;
+      updatedTiers[index] = { ...updatedTiers[index], price: numericPrice };
       setAttributes({ tiers: updatedTiers });
     };
 
@@ -65,7 +66,7 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                 />
                 <PlainText
                   className="price"
-                  value={tier.price}
+                  value={tier.price.toString()}
                   onChange={(value) => updateTierPrice(index, value)}
                   placeholder="0.00"
                 />

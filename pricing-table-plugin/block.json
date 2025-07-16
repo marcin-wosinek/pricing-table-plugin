@@ -20,12 +20,12 @@
         {
           "name": "Basic",
           "description": "Perfect for getting started",
-          "price": "9.99"
+          "price": 9.99
         },
         {
           "name": "Pro",
           "description": "For growing businesses",
-          "price": "19.99"
+          "price": 19.99
         }
       ],
       "items": {
@@ -38,7 +38,7 @@
             "type": "string"
           },
           "price": {
-            "type": "string"
+            "type": "number"
           }
         }
       }

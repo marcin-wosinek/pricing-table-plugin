@@ -1,0 +1,96 @@
+name: Main CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, intl, zip
+        coverage: none
+
+    - name: Validate composer.json and composer.lock
+      working-directory: ./pricing-table-plugin
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: ./pricing-table-plugin/vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install PHP dependencies
+      working-directory: ./pricing-table-plugin
+      run: composer install --prefer-dist --no-progress
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pricing-table-plugin
+        path: ./pricing-table-plugin
+        retention-days: 7
+
+  test:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: pricing-table-plugin
+        path: ./pricing-table-plugin
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+        
+    - name: Start Docker Compose services
+      run: docker compose --profile cli up -d
+      
+    - name: Wait for WordPress to be ready
+      run: |
+        timeout 300 bash -c 'until curl -f http://localhost:8080; do sleep 5; done'
+        
+    - name: Setup WordPress
+      run: |
+        docker compose exec -T wpcli bash -c "
+          wp core install --url=http://localhost:8080 --title='Test Site' --admin_user=admin --admin_password=admin123 --admin_email=admin@example.com --allow-root --path=/var/www/html
+          wp plugin activate pricing-table-plugin --allow-root --path=/var/www/html
+        "
+        
+    - name: Install Node.js dependencies
+      working-directory: ./pricing-table-plugin
+      run: npm ci
+      
+    - name: Install Playwright Browsers
+      working-directory: ./pricing-table-plugin
+      run: npx playwright install --with-deps
+      
+    - name: Run Playwright tests
+      working-directory: ./pricing-table-plugin
+      run: npx playwright test
+      
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: ./pricing-table-plugin/playwright-report/
+        retention-days: 30

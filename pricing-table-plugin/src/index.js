@@ -36,20 +36,13 @@ registerBlockType("pricing-table-plugin/pricing-table", {
         <div className="pricing-table">
           {tiers.map((tier, index) => (
             <div key={index} className="pricing-tier">
-              <h3
+              <PlainText
+                tagName="h3"
                 className="tier-name"
-                contentEditable="true"
-                suppressContentEditableWarning={true}
-                onBlur={(e) => updateTierName(index, e.target.textContent)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    e.target.blur();
-                  }
-                }}
-              >
-                {tier.name}
-              </h3>
+                value={tier.name}
+                onChange={(value) => updateTierName(index, value)}
+                placeholder="Enter tier name..."
+              />
               <RichText
                 tagName="p"
                 className="tier-description"

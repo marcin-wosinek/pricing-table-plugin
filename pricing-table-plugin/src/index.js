@@ -18,6 +18,10 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       setAttributes({ tiers: updatedTiers });
     };
     
+    const updateCurrency = (newCurrency) => {
+      setAttributes({ currency: newCurrency });
+    };
+    
     return (
       <div {...blockProps}>
         <div className="pricing-table">
@@ -39,7 +43,20 @@ registerBlockType("pricing-table-plugin/pricing-table", {
               </h3>
               <p className="tier-description">{tier.description}</p>
               <div className="tier-price">
-                <span className="currency">{currency}</span>
+                <span 
+                  className="currency"
+                  contentEditable="true"
+                  suppressContentEditableWarning={true}
+                  onBlur={(e) => updateCurrency(e.target.textContent)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      e.target.blur();
+                    }
+                  }}
+                >
+                  {currency}
+                </span>
                 <span className="price">{tier.price}</span>
               </div>
             </div>

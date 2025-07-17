@@ -4,7 +4,12 @@
 
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import { useBlockProps, RichText, PlainText, URLInputButton } from "@wordpress/block-editor";
+import {
+  useBlockProps,
+  RichText,
+  PlainText,
+  URLInputButton,
+} from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";
 import "./style.scss";
 
@@ -117,6 +122,11 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                   placeholder="0.00"
                 />
               </div>
+              <h4 className="features-header">
+                {index === 0
+                  ? "Key Features:"
+                  : `Everything in ${tiers[index - 1].name} and:`}
+              </h4>
               <ul className="tier-features">
                 {(tier.features || []).map((feature, featureIndex) => (
                   <li key={featureIndex} className="feature-item">
@@ -185,13 +195,20 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                 <span className="price">{tier.price}</span>
               </div>
               {tier.features && tier.features.length > 0 && (
-                <ul className="tier-features">
-                  {tier.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="feature-item">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <>
+                  <h4 className="features-header">
+                    {index === 0
+                      ? "Key Features:"
+                      : `Everything in ${tiers[index - 1].name} and:`}
+                  </h4>
+                  <ul className="tier-features">
+                    {tier.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="feature-item">
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </>
               )}
               {tier.buttonLabel && (
                 <div className="tier-action">

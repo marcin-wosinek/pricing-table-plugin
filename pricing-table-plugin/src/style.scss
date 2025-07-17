@@ -41,8 +41,15 @@
   margin-bottom: 1rem;
 }
 
-.tier-features {
+.features-header {
   margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.tier-features {
+  margin-top: 0;
 
   .feature-item {
     gap: 0.5rem;

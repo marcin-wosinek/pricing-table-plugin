@@ -10,13 +10,13 @@ import {
   PlainText,
   URLInputButton,
 } from "@wordpress/block-editor";
-import { Button } from "@wordpress/components";
+import { Button, SelectControl } from "@wordpress/components";
 import "./style.scss";
 
 registerBlockType("pricing-table-plugin/pricing-table", {
   edit: function ({ attributes, setAttributes }) {
     const blockProps = useBlockProps();
-    const { tiers, currency, promotedTier } = attributes;
+    const { tiers, currency, promotedTier, billing } = attributes;
 
     const updateTierName = (index, newName) => {
       const updatedTiers = [...tiers];
@@ -96,13 +96,17 @@ registerBlockType("pricing-table-plugin/pricing-table", {
         price: 0,
         features: [],
         buttonLabel: "Get Started",
-        buttonUrl: ""
+        buttonUrl: "",
       };
       setAttributes({ tiers: [...tiers, newTier] });
     };
 
     const setPromotedTier = (index) => {
       setAttributes({ promotedTier: index });
+    };
+
+    const updateBilling = (newBilling) => {
+      setAttributes({ billing: newBilling });
     };
 
     return (
@@ -147,7 +151,26 @@ registerBlockType("pricing-table-plugin/pricing-table", {
                   onChange={(value) => updateTierPrice(index, value)}
                   placeholder="0.00"
                 />
+                <span className="billing-period">
+                  per {billing === "monthly" ? "month" : "year"}
+                </span>
               </div>
+              <SelectControl
+                label={__("Billing Period", "pricing-table-plugin")}
+                value={billing}
+                options={[
+                  {
+                    label: __("Monthly", "pricing-table-plugin"),
+                    value: "monthly",
+                  },
+                  {
+                    label: __("Yearly", "pricing-table-plugin"),
+                    value: "yearly",
+                  },
+                ]}
+                onChange={updateBilling}
+                className="billing-select"
+              />
               <h4 className="features-header">
                 {index === 0
                   ? "Key Features:"
@@ -212,7 +235,7 @@ registerBlockType("pricing-table-plugin/pricing-table", {
   },
   save: function ({ attributes }) {
     const blockProps = useBlockProps.save();
-    const { tiers, currency } = attributes;
+    const { tiers, currency, billing } = attributes;
 
     return (
       <div {...blockProps}>
@@ -228,6 +251,9 @@ registerBlockType("pricing-table-plugin/pricing-table", {
               <div className="tier-price">
                 <span className="currency">{currency}</span>
                 <span className="price">{tier.price}</span>
+                <span className="billing-period">
+                  per {billing === "monthly" ? "month" : "year"}
+                </span>
               </div>
               {tier.features && tier.features.length > 0 && (
                 <>

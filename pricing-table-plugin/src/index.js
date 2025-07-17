@@ -89,6 +89,18 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       setAttributes({ tiers: updatedTiers });
     };
 
+    const addNewTier = () => {
+      const newTier = {
+        name: "New Tier",
+        description: "Description for this tier",
+        price: 0,
+        features: [],
+        buttonLabel: "Get Started",
+        buttonUrl: ""
+      };
+      setAttributes({ tiers: [...tiers, newTier] });
+    };
+
     return (
       <div {...blockProps}>
         <div className="pricing-table">
@@ -171,6 +183,15 @@ registerBlockType("pricing-table-plugin/pricing-table", {
               </div>
             </div>
           ))}
+          {tiers.length < 3 && (
+            <Button
+              variant="secondary"
+              onClick={addNewTier}
+              className="add-tier-button"
+            >
+              {__("Add New Tier", "pricing-table-plugin")}
+            </Button>
+          )}
         </div>
       </div>
     );

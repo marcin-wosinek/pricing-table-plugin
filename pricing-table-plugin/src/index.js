@@ -9,8 +9,9 @@ import {
 	RichText,
 	PlainText,
 	URLInputButton,
+	InspectorControls,
 } from '@wordpress/block-editor';
-import { Button, SelectControl } from '@wordpress/components';
+import { Button, SelectControl, PanelBody, TextControl } from '@wordpress/components';
 import './style.scss';
 
 registerBlockType('pricing-table-plugin/pricing-table', {
@@ -119,23 +120,45 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 		};
 
 		return (
-			<div {...blockProps}>
-				<div className="pricing-table">
+			<>
+				<InspectorControls>
+					<PanelBody title={__('Pricing Table Settings', 'pricing-table-plugin')}>
+						<TextControl
+							label={__('Currency Symbol', 'pricing-table-plugin')}
+							value={currency}
+							onChange={updateCurrency}
+							placeholder="$"
+						/>
+						<SelectControl
+							label={__('Billing Period', 'pricing-table-plugin')}
+							value={billing}
+							options={[
+								{
+									label: __('Monthly', 'pricing-table-plugin'),
+									value: 'monthly',
+								},
+								{
+									label: __('Yearly', 'pricing-table-plugin'),
+									value: 'yearly',
+								},
+							]}
+							onChange={updateBilling}
+						/>
+						<SelectControl
+							label={__('Promoted Tier', 'pricing-table-plugin')}
+							value={promotedTier.toString()}
+							options={tiers.map((tier, index) => ({
+								label: tier.name || `Tier ${index + 1}`,
+								value: index.toString(),
+							}))}
+							onChange={(value) => setPromotedTier(parseInt(value))}
+						/>
+					</PanelBody>
+				</InspectorControls>
+				<div {...blockProps}>
+					<div className="pricing-table">
 					{tiers.map((tier, index) => (
 						<div key={index} className="pricing-tier">
-							{index !== promotedTier && (
-								<Button
-									variant="primary"
-									onClick={() => setPromotedTier(index)}
-									className="set-best-value-button"
-									isSmall
-								>
-									{__(
-										'Set as BEST VALUE',
-										'pricing-table-plugin'
-									)}
-								</Button>
-							)}
 							<PlainText
 								tagName="h3"
 								className="tier-name"
@@ -155,12 +178,7 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 								placeholder="Enter tier description..."
 							/>
 							<div className="tier-price">
-								<PlainText
-									className="currency"
-									value={currency}
-									onChange={updateCurrency}
-									placeholder="$"
-								/>
+								<span className="currency">{currency}</span>
 								<PlainText
 									className="price"
 									value={tier.price.toString()}
@@ -174,31 +192,6 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 									{billing === 'monthly' ? 'month' : 'year'}
 								</span>
 							</div>
-							<SelectControl
-								label={__(
-									'Billing Period',
-									'pricing-table-plugin'
-								)}
-								value={billing}
-								options={[
-									{
-										label: __(
-											'Monthly',
-											'pricing-table-plugin'
-										),
-										value: 'monthly',
-									},
-									{
-										label: __(
-											'Yearly',
-											'pricing-table-plugin'
-										),
-										value: 'yearly',
-									},
-								]}
-								onChange={updateBilling}
-								className="billing-select"
-							/>
 							<h4 className="features-header">
 								{index === 0
 									? 'Key Features:'
@@ -277,11 +270,12 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 					)}
 				</div>
 			</div>
+		</>
 		);
 	},
 	save: function ({ attributes }) {
 		const blockProps = useBlockProps.save();
-		const { tiers, currency, billing } = attributes;
+		const { tiers, currency, billing, promotedTier } = attributes;
 
 		return (
 			<div {...blockProps}>

@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pricing-table-plugin/pricing-tier",
+	"version": "0.1.0",
+	"title": "Pricing Tier",
+	"category": "widgets",
+	"icon": "table-row-after",
+	"description": "A single pricing tier with name, price, features, and button.",
+	"parent": [ "pricing-table-plugin/pricing-table" ],
+	"example": {},
+	"attributes": {
+		"name": {
+			"type": "string",
+			"default": "New Tier"
+		},
+		"description": {
+			"type": "string",
+			"default": "Description for this tier"
+		},
+		"price": {
+			"type": "number",
+			"default": 0
+		},
+		"features": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "string"
+			}
+		},
+		"buttonLabel": {
+			"type": "string",
+			"default": "Get Started"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": true
+	},
+	"textdomain": "pricing-table-plugin",
+	"editorScript": "file:./pricing-tier-edit.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

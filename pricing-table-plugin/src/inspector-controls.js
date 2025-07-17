@@ -13,7 +13,6 @@ export function PricingTableInspectorControls( {
 	billing,
 	promotedTier,
 	color,
-	tiers,
 	updateCurrency,
 	updateBilling,
 	setPromotedTier,
@@ -42,10 +41,24 @@ export function PricingTableInspectorControls( {
 				<SelectControl
 					label={ __( 'Promoted Tier', 'pricing-table-plugin' ) }
 					value={ promotedTier.toString() }
-					options={ tiers.map( ( tier, index ) => ( {
-						label: tier.name || `Tier ${ index + 1 }`,
-						value: index.toString(),
-					} ) ) }
+					options={ [
+						{
+							label: __( 'None', 'pricing-table-plugin' ),
+							value: '-1',
+						},
+						{
+							label: __( 'First Tier', 'pricing-table-plugin' ),
+							value: '0',
+						},
+						{
+							label: __( 'Second Tier', 'pricing-table-plugin' ),
+							value: '1',
+						},
+						{
+							label: __( 'Third Tier', 'pricing-table-plugin' ),
+							value: '2',
+						},
+					] }
 					onChange={ ( value ) =>
 						setPromotedTier( parseInt( value ) )
 					}

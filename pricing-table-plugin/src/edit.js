@@ -1,15 +1,14 @@
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { Button } from '@wordpress/components';
+import { createContext } from '@wordpress/element';
 import { PricingTableInspectorControls } from './inspector-controls.js';
-import { TierComponent } from './tier-component.js';
-import { useTierActions } from './hooks/use-tier-actions.js';
+
+// Create context to share data with tier blocks
+export const PricingTableContext = createContext();
 
 export function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
-	const { tiers, currency, promotedTier, billing, color } = attributes;
-
-	const tierActions = useTierActions( tiers, setAttributes );
+	const { currency, promotedTier, billing, color } = attributes;
 
 	const updateCurrency = ( newCurrency ) => {
 		setAttributes( { currency: newCurrency } );
@@ -27,14 +26,25 @@ export function Edit( { attributes, setAttributes } ) {
 		setAttributes( { color: newColor } );
 	};
 
+	// Context value to share with tier blocks
+	const contextValue = {
+		currency,
+		billing,
+		promotedTier,
+		color,
+		setPromotedTier,
+		updateCurrency,
+		updateBilling,
+		updateColor,
+	};
+
 	return (
-		<>
+		<PricingTableContext.Provider value={ contextValue }>
 			<PricingTableInspectorControls
 				currency={ currency }
 				billing={ billing }
 				promotedTier={ promotedTier }
 				color={ color }
-				tiers={ tiers }
 				updateCurrency={ updateCurrency }
 				updateBilling={ updateBilling }
 				setPromotedTier={ setPromotedTier }
@@ -45,28 +55,28 @@ export function Edit( { attributes, setAttributes } ) {
 					className="pricing-table"
 					style={ { '--pricing-table-color': color } }
 				>
-					{ tiers.map( ( tier, index ) => (
-						<TierComponent
-							key={ index }
-							tier={ tier }
-							index={ index }
-							tiers={ tiers }
-							currency={ currency }
-							billing={ billing }
-							tierActions={ tierActions }
-						/>
-					) ) }
-					{ tiers.length < 3 && (
-						<Button
-							variant="secondary"
-							onClick={ tierActions.addNewTier }
-							className="add-tier-button"
-						>
-							{ __( 'Add New Tier', 'pricing-table-plugin' ) }
-						</Button>
-					) }
+					<InnerBlocks
+						allowedBlocks={ [
+							'pricing-table-plugin/pricing-tier',
+						] }
+						template={ [
+							[
+								'pricing-table-plugin/pricing-tier',
+								{ name: 'Basic', price: 10 },
+							],
+							[
+								'pricing-table-plugin/pricing-tier',
+								{ name: 'Pro', price: 20 },
+							],
+							[
+								'pricing-table-plugin/pricing-tier',
+								{ name: 'Enterprise', price: 30 },
+							],
+						] }
+						renderAppender={ InnerBlocks.ButtonBlockAppender }
+					/>
 				</div>
 			</div>
-		</>
+		</PricingTableContext.Provider>
 	);
 }

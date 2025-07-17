@@ -1,0 +1,77 @@
+import { useBlockProps, RichText } from '@wordpress/block-editor';
+
+export function Save({ attributes }) {
+	const blockProps = useBlockProps.save();
+	const { tiers, currency, billing, promotedTier, color } = attributes;
+
+	return (
+		<div {...blockProps}>
+			<div
+				className="pricing-table"
+				style={{ '--pricing-table-color': color }}
+			>
+				{tiers.map((tier, index) => (
+					<div
+						key={index}
+						className={`pricing-tier ${
+							index === promotedTier ? 'promoted' : ''
+						}`}
+					>
+						<h3 className="tier-name">{tier.name}</h3>
+						<RichText.Content
+							tagName="p"
+							className="tier-description"
+							value={tier.description}
+						/>
+						<div className="tier-price">
+							<span className="currency">{currency}</span>
+							<span className="price">{tier.price}</span>
+							<span className="billing-period">
+								per {billing === 'monthly' ? 'month' : 'year'}
+							</span>
+						</div>
+						{tier.features && tier.features.length > 0 && (
+							<>
+								<h4 className="features-header">
+									{index === 0
+										? 'Key Features:'
+										: `Everything in ${tiers[index - 1].name} and:`}
+								</h4>
+								<ul className="tier-features">
+									{tier.features.map(
+										(feature, featureIndex) => (
+											<li
+												key={featureIndex}
+												className="feature-item"
+											>
+												{feature}
+											</li>
+										)
+									)}
+								</ul>
+							</>
+						)}
+						{tier.buttonLabel && (
+							<div className="tier-action">
+								<a
+									href={tier.buttonUrl || '#'}
+									className="action-button"
+									target={
+										tier.buttonUrl ? '_blank' : undefined
+									}
+									rel={
+										tier.buttonUrl
+											? 'noopener noreferrer'
+											: undefined
+									}
+								>
+									{tier.buttonLabel}
+								</a>
+							</div>
+						)}
+					</div>
+				))}
+			</div>
+		</div>
+	);
+}

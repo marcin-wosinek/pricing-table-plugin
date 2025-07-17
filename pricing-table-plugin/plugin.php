@@ -19,6 +19,7 @@ require_once __DIR__ . '/vendor/autoload.php';
  */
 function register_pricing_table_block() {
     register_block_type( __DIR__ . '/block.json' );
+    register_block_type( __DIR__ . '/src/pricing-tier-block.json' );
 }
 
 // Register hooks

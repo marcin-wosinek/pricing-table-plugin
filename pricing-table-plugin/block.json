@@ -1,88 +1,84 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 3,
-  "name": "pricing-table-plugin/pricing-table",
-  "title": "Pricing Table",
-  "category": "widgets",
-  "icon": "table-row-after",
-  "description": "A customizable pricing table for displaying product or service pricing options.",
-  "supports": {
-    "html": false
-  },
-  "attributes": {
-    "currency": {
-      "type": "string",
-      "default": "$"
-    },
-    "promotedTier": {
-      "type": "number",
-      "default": 1
-    },
-    "billing": {
-      "type": "string",
-      "default": "monthly"
-    },
-    "tiers": {
-      "type": "array",
-      "default": [
-        {
-          "name": "Basic",
-          "description": "Perfect for getting started",
-          "price": 9.99,
-          "features": [
-            "1 User",
-            "10GB Storage",
-            "Email Support"
-          ],
-          "buttonLabel": "Get Started",
-          "buttonUrl": ""
-        },
-        {
-          "name": "Pro",
-          "description": "For growing businesses",
-          "price": 19.99,
-          "features": [
-            "5 Users",
-            "100GB Storage",
-            "Priority Support",
-            "Advanced Analytics"
-          ],
-          "buttonLabel": "Choose Pro",
-          "buttonUrl": ""
-        }
-      ],
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number"
-          },
-          "features": {
-            "type": "array",
-            "default": [],
-            "items": {
-              "type": "string"
-            }
-          },
-          "buttonLabel": {
-            "type": "string",
-            "default": "Get Started"
-          },
-          "buttonUrl": {
-            "type": "string",
-            "default": ""
-          }
-        }
-      }
-    }
-  },
-  "textdomain": "pricing-table-plugin",
-  "script": "file:./build/index.js",
-  "style": "file:./build/style-index.css"
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pricing-table-plugin/pricing-table",
+	"title": "Pricing Table",
+	"category": "widgets",
+	"icon": "table-row-after",
+	"description": "A customizable pricing table for displaying product or service pricing options.",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"currency": {
+			"type": "string",
+			"default": "$"
+		},
+		"promotedTier": {
+			"type": "number",
+			"default": 1
+		},
+		"billing": {
+			"type": "string",
+			"default": "monthly"
+		},
+		"tiers": {
+			"type": "array",
+			"default": [
+				{
+					"name": "Basic",
+					"description": "Perfect for getting started",
+					"price": 9.99,
+					"features": ["1 User", "10GB Storage", "Email Support"],
+					"buttonLabel": "Get Started",
+					"buttonUrl": ""
+				},
+				{
+					"name": "Pro",
+					"description": "For growing businesses",
+					"price": 19.99,
+					"features": [
+						"5 Users",
+						"100GB Storage",
+						"Priority Support",
+						"Advanced Analytics"
+					],
+					"buttonLabel": "Choose Pro",
+					"buttonUrl": ""
+				}
+			],
+			"items": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number"
+					},
+					"features": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "string"
+						}
+					},
+					"buttonLabel": {
+						"type": "string",
+						"default": "Get Started"
+					},
+					"buttonUrl": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"textdomain": "pricing-table-plugin",
+	"script": "file:./build/index.js",
+	"style": "file:./build/style-index.css"
 }

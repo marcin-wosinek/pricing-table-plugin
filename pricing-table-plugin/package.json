@@ -1,24 +1,24 @@
 {
-  "name": "pricing-table-plugin",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "wp-scripts build",
-    "start": "wp-scripts start",
-    "lint:js": "wp-scripts lint-js",
-    "lint:css": "wp-scripts lint-style",
-    "format": "wp-scripts format",
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:debug": "playwright test --debug"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "@playwright/test": "^1.54.1",
-    "@wordpress/scripts": "^30.19.0"
-  }
+	"name": "pricing-table-plugin",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js",
+		"lint:css": "wp-scripts lint-style",
+		"format": "wp-scripts format",
+		"test": "playwright test",
+		"test:ui": "playwright test --ui",
+		"test:debug": "playwright test --debug"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "module",
+	"devDependencies": {
+		"@playwright/test": "^1.54.1",
+		"@wordpress/scripts": "^30.19.0"
+	}
 }

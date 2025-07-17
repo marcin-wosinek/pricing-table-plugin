@@ -22,6 +22,10 @@
 			"type": "string",
 			"default": "monthly"
 		},
+		"color": {
+			"type": "string",
+			"default": "#009344"
+		},
 		"tiers": {
 			"type": "array",
 			"default": [

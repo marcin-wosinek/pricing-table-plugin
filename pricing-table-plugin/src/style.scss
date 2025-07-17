@@ -17,8 +17,8 @@
 }
 
 .pricing-tier.promoted {
-	border-color: #007cba;
-	background-color: #f0f8ff;
+	border-color: var(--pricing-table-color, #007cba);
+	background-color: color-mix(in srgb, var(--pricing-table-color, #007cba) 10%, transparent);
 }
 
 .tier-price {
@@ -59,8 +59,8 @@
 }
 
 .promoted .action-button {
-	background-color: var(--wp--preset--color--accent-3);
+	background-color: var(--pricing-table-color);
 	color: var(--wp--preset--color--base);
-	border-color: var(--wp--preset--color--accent-3);
-  font-weight: bold;
+	border-color: var(--pricing-table-color);
+	font-weight: bold;
 }

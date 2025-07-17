@@ -11,13 +11,19 @@ import {
 	URLInputButton,
 	InspectorControls,
 } from '@wordpress/block-editor';
-import { Button, SelectControl, PanelBody, TextControl } from '@wordpress/components';
+import {
+	Button,
+	SelectControl,
+	PanelBody,
+	TextControl,
+	ColorPicker,
+} from '@wordpress/components';
 import './style.scss';
 
 registerBlockType('pricing-table-plugin/pricing-table', {
 	edit: function ({ attributes, setAttributes }) {
 		const blockProps = useBlockProps();
-		const { tiers, currency, promotedTier, billing } = attributes;
+		const { tiers, currency, promotedTier, billing, color } = attributes;
 
 		const updateTierName = (index, newName) => {
 			const updatedTiers = [...tiers];
@@ -119,12 +125,24 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 			setAttributes({ billing: newBilling });
 		};
 
+		const updateColor = (newColor) => {
+			setAttributes({ color: newColor });
+		};
+
 		return (
 			<>
 				<InspectorControls>
-					<PanelBody title={__('Pricing Table Settings', 'pricing-table-plugin')}>
+					<PanelBody
+						title={__(
+							'Pricing Table Settings',
+							'pricing-table-plugin'
+						)}
+					>
 						<TextControl
-							label={__('Currency Symbol', 'pricing-table-plugin')}
+							label={__(
+								'Currency Symbol',
+								'pricing-table-plugin'
+							)}
 							value={currency}
 							onChange={updateCurrency}
 							placeholder="$"
@@ -134,7 +152,10 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 							value={billing}
 							options={[
 								{
-									label: __('Monthly', 'pricing-table-plugin'),
+									label: __(
+										'Monthly',
+										'pricing-table-plugin'
+									),
 									value: 'monthly',
 								},
 								{
@@ -151,137 +172,168 @@ registerBlockType('pricing-table-plugin/pricing-table', {
 								label: tier.name || `Tier ${index + 1}`,
 								value: index.toString(),
 							}))}
-							onChange={(value) => setPromotedTier(parseInt(value))}
+							onChange={(value) =>
+								setPromotedTier(parseInt(value))
+							}
 						/>
+						<div style={{ marginTop: '16px' }}>
+							<label
+								style={{
+									display: 'block',
+									marginBottom: '8px',
+									fontWeight: '500',
+								}}
+							>
+								{__('Accent Color', 'pricing-table-plugin')}
+							</label>
+							<ColorPicker
+								color={color}
+								onChange={updateColor}
+								enableAlpha={false}
+							/>
+						</div>
 					</PanelBody>
 				</InspectorControls>
 				<div {...blockProps}>
-					<div className="pricing-table">
-					{tiers.map((tier, index) => (
-						<div key={index} className="pricing-tier">
-							<PlainText
-								tagName="h3"
-								className="tier-name"
-								value={tier.name}
-								onChange={(value) =>
-									updateTierName(index, value)
-								}
-								placeholder="Enter tier name..."
-							/>
-							<RichText
-								tagName="p"
-								className="tier-description"
-								value={tier.description}
-								onChange={(value) =>
-									updateTierDescription(index, value)
-								}
-								placeholder="Enter tier description..."
-							/>
-							<div className="tier-price">
-								<span className="currency">{currency}</span>
+					<div
+						className="pricing-table"
+						style={{ '--pricing-table-color': color }}
+					>
+						{tiers.map((tier, index) => (
+							<div key={index} className="pricing-tier">
 								<PlainText
-									className="price"
-									value={tier.price.toString()}
+									tagName="h3"
+									className="tier-name"
+									value={tier.name}
 									onChange={(value) =>
-										updateTierPrice(index, value)
+										updateTierName(index, value)
 									}
-									placeholder="0.00"
+									placeholder="Enter tier name..."
 								/>
-								<span className="billing-period">
-									per{' '}
-									{billing === 'monthly' ? 'month' : 'year'}
-								</span>
-							</div>
-							<h4 className="features-header">
-								{index === 0
-									? 'Key Features:'
-									: `Everything in ${tiers[index - 1].name} and:`}
-							</h4>
-							<ul className="tier-features">
-								{(tier.features || []).map(
-									(feature, featureIndex) => (
-										<li
-											key={featureIndex}
-											className="feature-item"
-										>
-											<PlainText
-												value={feature}
-												onChange={(value) =>
-													updateTierFeature(
-														index,
-														featureIndex,
-														value
-													)
-												}
-												placeholder="Enter feature..."
-											/>
-											<Button
-												onClick={() =>
-													removeTierFeature(
-														index,
-														featureIndex
-													)
-												}
-												className="remove-feature"
-												isSmall
-												variant="secondary"
+								<RichText
+									tagName="p"
+									className="tier-description"
+									value={tier.description}
+									onChange={(value) =>
+										updateTierDescription(index, value)
+									}
+									placeholder="Enter tier description..."
+								/>
+								<div className="tier-price">
+									<span className="currency">{currency}</span>
+									<PlainText
+										className="price"
+										value={tier.price.toString()}
+										onChange={(value) =>
+											updateTierPrice(index, value)
+										}
+										placeholder="0.00"
+									/>
+									<span className="billing-period">
+										per{' '}
+										{billing === 'monthly'
+											? 'month'
+											: 'year'}
+									</span>
+								</div>
+								<h4 className="features-header">
+									{index === 0
+										? 'Key Features:'
+										: `Everything in ${tiers[index - 1].name} and:`}
+								</h4>
+								<ul className="tier-features">
+									{(tier.features || []).map(
+										(feature, featureIndex) => (
+											<li
+												key={featureIndex}
+												className="feature-item"
 											>
-												×
-											</Button>
-										</li>
-									)
-								)}
-							</ul>
+												<PlainText
+													value={feature}
+													onChange={(value) =>
+														updateTierFeature(
+															index,
+															featureIndex,
+															value
+														)
+													}
+													placeholder="Enter feature..."
+												/>
+												<Button
+													onClick={() =>
+														removeTierFeature(
+															index,
+															featureIndex
+														)
+													}
+													className="remove-feature"
+													isSmall
+													variant="secondary"
+												>
+													×
+												</Button>
+											</li>
+										)
+									)}
+								</ul>
+								<Button
+									variant="secondary"
+									onClick={() => addTierFeature(index)}
+									className="add-feature"
+								>
+									{__('Add Feature', 'pricing-table-plugin')}
+								</Button>
+								<div className="tier-action">
+									<PlainText
+										className="button-label"
+										value={
+											tier.buttonLabel || 'Get Started'
+										}
+										onChange={(value) =>
+											updateTierButtonLabel(index, value)
+										}
+										placeholder="Button text..."
+									/>
+									<URLInputButton
+										url={tier.buttonUrl || ''}
+										onChange={(url) =>
+											updateTierButtonUrl(index, url)
+										}
+										text={tier.buttonLabel || 'Get Started'}
+										className="action-button-input"
+									/>
+								</div>
+							</div>
+						))}
+						{tiers.length < 3 && (
 							<Button
 								variant="secondary"
-								onClick={() => addTierFeature(index)}
-								className="add-feature"
+								onClick={addNewTier}
+								className="add-tier-button"
 							>
-								{__('Add Feature', 'pricing-table-plugin')}
+								{__('Add New Tier', 'pricing-table-plugin')}
 							</Button>
-							<div className="tier-action">
-								<PlainText
-									className="button-label"
-									value={tier.buttonLabel || 'Get Started'}
-									onChange={(value) =>
-										updateTierButtonLabel(index, value)
-									}
-									placeholder="Button text..."
-								/>
-								<URLInputButton
-									url={tier.buttonUrl || ''}
-									onChange={(url) =>
-										updateTierButtonUrl(index, url)
-									}
-									text={tier.buttonLabel || 'Get Started'}
-									className="action-button-input"
-								/>
-							</div>
-						</div>
-					))}
-					{tiers.length < 3 && (
-						<Button
-							variant="secondary"
-							onClick={addNewTier}
-							className="add-tier-button"
-						>
-							{__('Add New Tier', 'pricing-table-plugin')}
-						</Button>
-					)}
+						)}
+					</div>
 				</div>
-			</div>
-		</>
+			</>
 		);
 	},
 	save: function ({ attributes }) {
 		const blockProps = useBlockProps.save();
-		const { tiers, currency, billing, promotedTier } = attributes;
+		const { tiers, currency, billing, promotedTier, color } = attributes;
 
 		return (
 			<div {...blockProps}>
-				<div className="pricing-table">
+				<div
+					className="pricing-table"
+					style={{ '--pricing-table-color': color }}
+				>
 					{tiers.map((tier, index) => (
-						<div key={index} className="pricing-tier">
+						<div
+							key={index}
+							className={`pricing-tier ${index === promotedTier ? 'promoted' : ''}`}
+						>
 							<h3 className="tier-name">{tier.name}</h3>
 							<RichText.Content
 								tagName="p"

@@ -14,6 +14,10 @@
       "type": "string",
       "default": "$"
     },
+    "promotedTier": {
+      "type": "number",
+      "default": 1
+    },
     "tiers": {
       "type": "array",
       "default": [

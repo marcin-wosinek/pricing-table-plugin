@@ -16,7 +16,7 @@ import "./style.scss";
 registerBlockType("pricing-table-plugin/pricing-table", {
   edit: function ({ attributes, setAttributes }) {
     const blockProps = useBlockProps();
-    const { tiers, currency } = attributes;
+    const { tiers, currency, promotedTier } = attributes;
 
     const updateTierName = (index, newName) => {
       const updatedTiers = [...tiers];
@@ -101,11 +101,25 @@ registerBlockType("pricing-table-plugin/pricing-table", {
       setAttributes({ tiers: [...tiers, newTier] });
     };
 
+    const setPromotedTier = (index) => {
+      setAttributes({ promotedTier: index });
+    };
+
     return (
       <div {...blockProps}>
         <div className="pricing-table">
           {tiers.map((tier, index) => (
             <div key={index} className="pricing-tier">
+              {index !== promotedTier && (
+                <Button
+                  variant="primary"
+                  onClick={() => setPromotedTier(index)}
+                  className="set-best-value-button"
+                  isSmall
+                >
+                  {__("Set as BEST VALUE", "pricing-table-plugin")}
+                </Button>
+              )}
               <PlainText
                 tagName="h3"
                 className="tier-name"

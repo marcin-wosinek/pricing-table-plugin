@@ -3,222 +3,64 @@
  */
 
 .pricing-table {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  
-  .add-tier-button {
-    align-self: flex-start;
-    margin-top: 1rem;
-    min-width: 150px;
-  }
-}
-
-.set-best-value-button {
-  margin-bottom: 0.75rem;
-  width: 100%;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 
 .pricing-tier {
-  flex: 1;
-  min-width: 250px;
-  padding: 1.5rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
+	flex: 1;
+	min-width: 250px;
+	padding: 1.5rem;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 }
 
-.tier-name {
-  margin-bottom: 0.5rem;
-  cursor: text;
-  border: 1px solid transparent;
-  padding: 2px 4px;
-  border-radius: 3px;
-  background: transparent;
-
-  &:hover {
-    border-color: currentColor;
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: currentColor;
-    background-color: transparent;
-    box-shadow: 0 0 0 1px currentColor;
-  }
-}
-
-.tier-description {
-  margin-bottom: 1rem;
-}
-
-.features-header {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.9em;
-  font-weight: 600;
-}
-
-.tier-features {
-  margin-top: 0;
-
-  .feature-item {
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-
-    .block-editor-plain-text {
-      width: calc(100% - 2em);
-      border: 1px solid transparent;
-      padding: 2px 4px;
-      border-radius: 3px;
-      background: transparent;
-
-      &:hover {
-        border-color: currentColor;
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      &:focus {
-        outline: none;
-        border-color: currentColor;
-        background-color: transparent;
-        box-shadow: 0 0 0 1px currentColor;
-      }
-    }
-
-    .remove-feature {
-      color: #cc1818;
-      min-width: 24px;
-      height: 24px;
-      font-size: 16px;
-      line-height: 1;
-
-      &:hover {
-        background-color: #cc1818;
-        color: white;
-      }
-    }
-  }
-
-  .add-feature-container {
-    margin-top: 0.5rem;
-
-    .add-feature {
-      // Any specific styling for the add button
-    }
-  }
-}
-
-.tier-action {
-  margin-top: 1rem;
-  
-  .button-label {
-    width: 100%;
-    margin-bottom: 0.5rem;
-    border: 1px solid transparent;
-    padding: 2px 4px;
-    border-radius: 3px;
-    background: transparent;
-    
-    &:hover {
-      border-color: currentColor;
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-    
-    &:focus {
-      outline: none;
-      border-color: currentColor;
-      background-color: transparent;
-      box-shadow: 0 0 0 1px currentColor;
-    }
-  }
-  
-  .block-editor-url-input {
-    width: 100%;
-  }
-  
-  .action-button {
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background: transparent;
-    color: currentColor;
-    text-decoration: none;
-    border: 1px solid currentColor;
-    border-radius: 4px;
-    text-align: center;
-    width: 100%;
-    margin-top: 1rem;
-    
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-      color: currentColor;
-    }
-  }
+.pricing-tier.promoted {
+	border-color: #007cba;
+	background-color: #f0f8ff;
 }
 
 .tier-price {
-  display: flex;
-  align-items: baseline;
-  gap: 0.25rem;
-  
-  .currency {
-    border: 1px solid transparent;
-    padding: 2px 4px;
-    border-radius: 3px;
-    background: transparent;
-    width: 3ch;
-    min-width: 3ch;
-
-    &:hover {
-      border-color: currentColor;
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: currentColor;
-      background-color: transparent;
-      box-shadow: 0 0 0 1px currentColor;
-    }
-  }
-
-  .price {
-    border: 1px solid transparent;
-    padding: 2px 4px;
-    border-radius: 3px;
-    background: transparent;
-
-    &:hover {
-      border-color: currentColor;
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: currentColor;
-      background-color: transparent;
-      box-shadow: 0 0 0 1px currentColor;
-    }
-  }
-  
-  .billing-period {
-    font-size: 0.875em;
-    color: currentColor;
-    opacity: 0.7;
-  }
+	display: flex;
+	align-items: baseline;
+	gap: 0.25rem;
+	margin-bottom: 1rem;
 }
 
-.billing-select {
-  margin-bottom: 1rem;
-  
-  label {
-    font-size: 0.875em;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
+.billing-period {
+	font-size: 0.875em;
+	opacity: 0.7;
+}
+
+.tier-features {
+	margin: 1rem 0;
+}
+
+.remove-feature {
+	color: #cc1818;
+	min-width: 24px;
+	height: 24px;
+}
+
+.tier-action {
+	margin-top: 1rem;
+}
+
+.action-button {
+	display: inline-block;
+	padding: 1rem;
+	border: 1px solid #ddd;
+	border-radius: 0.5rem;
+	text-align: center;
+	width: 100%;
+  box-sizing: border-box;
+	text-decoration: none;
+}
+
+.promoted .action-button {
+	background-color: var(--wp--preset--color--accent-3);
+	color: var(--wp--preset--color--base);
+	border-color: var(--wp--preset--color--accent-3);
+  font-weight: bold;
 }

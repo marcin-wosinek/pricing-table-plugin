@@ -1,4 +1,4 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, RichText, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 export function PricingTierSave( { attributes } ) {
@@ -18,23 +18,12 @@ export function PricingTierSave( { attributes } ) {
 				<div className="tier-price">
 					<span className="price">{ price }</span>
 				</div>
-				{ features && features.length > 0 && (
-					<>
-						<h4 className="features-header">
-							{ __( 'Features:', 'pricing-table-plugin' ) }
-						</h4>
-						<ul className="tier-features">
-							{ features.map( ( feature, featureIndex ) => (
-								<li
-									key={ featureIndex }
-									className="feature-item"
-								>
-									{ feature }
-								</li>
-							) ) }
-						</ul>
-					</>
-				) }
+				<h4 className="features-header">
+					{ __( 'Features:', 'pricing-table-plugin' ) }
+				</h4>
+				<div className="tier-features">
+					<InnerBlocks.Content />
+				</div>
 				{ buttonLabel && (
 					<div className="tier-action">
 						<a

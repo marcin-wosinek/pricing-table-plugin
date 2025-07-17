@@ -4,10 +4,11 @@ import {
 	PlainText,
 	RichText,
 	URLInputButton,
+	InnerBlocks,
 } from '@wordpress/block-editor';
 import { Button } from '@wordpress/components';
-import { useContext } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
+import { useContext, useEffect } from '@wordpress/element';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { PricingTableContext } from './edit.js';
 
 export function PricingTierEdit( { attributes, setAttributes, clientId } ) {
@@ -47,22 +48,66 @@ export function PricingTierEdit( { attributes, setAttributes, clientId } ) {
 		setAttributes( { buttonLabel: value } );
 	const updateButtonUrl = ( value ) => setAttributes( { buttonUrl: value } );
 
-	const updateFeature = ( featureIndex, value ) => {
-		const newFeatures = [ ...features ];
-		newFeatures[ featureIndex ] = value;
-		setAttributes( { features: newFeatures } );
+	// Get inner blocks for features
+	const featureBlocks = useSelect(
+		( select ) => {
+			const { getBlocks } = select( 'core/block-editor' );
+			return getBlocks( clientId );
+		},
+		[ clientId ]
+	);
+
+	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+
+	// Helper function to extract text content from different block types
+	const extractBlockContent = ( block ) => {
+		switch ( block.name ) {
+			case 'core/list-item':
+				return block.attributes.content || '';
+			case 'core/paragraph':
+				return block.attributes.content || '';
+			case 'core/heading':
+				return block.attributes.content || '';
+			case 'core/quote':
+				return block.attributes.value || '';
+			case 'core/image':
+				return (
+					block.attributes.alt ||
+					block.attributes.caption ||
+					'[Image]'
+				);
+			case 'core/separator':
+				return '[Separator]';
+			case 'core/spacer':
+				return '[Spacer]';
+			case 'core/buttons':
+				return '[Buttons]';
+			case 'core/list':
+				return '[List]';
+			default:
+				return block.attributes.content || '[Block]';
+		}
 	};
 
-	const addFeature = () => {
-		setAttributes( { features: [ ...features, '' ] } );
-	};
+	// Sync features array with InnerBlocks (initial load)
+	useEffect( () => {
+		if ( features && features.length > 0 && featureBlocks.length === 0 ) {
+			const newBlocks = features.map( ( feature ) =>
+				wp.blocks.createBlock( 'core/list-item', { content: feature } )
+			);
+			replaceInnerBlocks( clientId, newBlocks );
+		}
+	}, [ features, featureBlocks.length ] );
 
-	const removeFeature = ( featureIndex ) => {
-		const newFeatures = features.filter(
-			( _, index ) => index !== featureIndex
-		);
-		setAttributes( { features: newFeatures } );
-	};
+	// Sync InnerBlocks back to features array
+	useEffect( () => {
+		const blockFeatures = featureBlocks.map( extractBlockContent );
+
+		// Only update if content actually changed
+		if ( JSON.stringify( blockFeatures ) !== JSON.stringify( features ) ) {
+			setAttributes( { features: blockFeatures } );
+		}
+	}, [ featureBlocks ] );
 
 	const togglePromotion = () => {
 		setPromotedTier( isPromoted ? -1 : tierIndex );
@@ -139,37 +184,24 @@ export function PricingTierEdit( { attributes, setAttributes, clientId } ) {
 								'pricing-table-plugin'
 						  ).replace( '%s', previousTierName ) }
 				</h4>
-				<ul className="tier-features">
-					{ ( features || [] ).map( ( feature, featureIndex ) => (
-						<li key={ featureIndex } className="feature-item">
-							<PlainText
-								value={ feature }
-								onChange={ ( value ) =>
-									updateFeature( featureIndex, value )
-								}
-								placeholder={ __(
-									'Enter feature...',
-									'pricing-table-plugin'
-								) }
-							/>
-							<Button
-								onClick={ () => removeFeature( featureIndex ) }
-								className="remove-feature"
-								isSmall
-								variant="secondary"
-							>
-								×
-							</Button>
-						</li>
-					) ) }
-				</ul>
-				<Button
-					variant="secondary"
-					onClick={ addFeature }
-					className="add-feature"
-				>
-					{ __( 'Add Feature', 'pricing-table-plugin' ) }
-				</Button>
+				<div className="tier-features">
+					<InnerBlocks
+						allowedBlocks={ [ 'core/list-item', 'core/list' ] }
+						template={ ( features || [] ).map( ( feature ) => [
+							'core/list-item',
+							{ content: feature },
+						] ) }
+						templateLock={ false }
+						renderAppender={ InnerBlocks.ButtonBlockAppender }
+						placeholder={ __(
+							'Add features for this tier...',
+							'pricing-table-plugin'
+						) }
+						__experimentalCaptureToolbars={ true }
+						__experimentalPassSelection={ true }
+						orientation="vertical"
+					/>
+				</div>
 				<div className="tier-action">
 					<PlainText
 						className="button-label"

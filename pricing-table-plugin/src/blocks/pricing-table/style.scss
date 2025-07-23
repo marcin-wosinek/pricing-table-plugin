@@ -52,26 +52,34 @@
 	height: 24px;
 }
 
-.tier-action {
+/* WordPress core button styling within pricing tier */
+.pricing-tier .wp-block-button {
 	margin-top: 1rem;
 }
 
-.action-button {
+.pricing-tier .wp-block-button .wp-block-button__link {
 	display: inline-block;
 	padding: 1rem;
 	border: 3px solid var(--pricing-table-color);
 	border-radius: 0.5rem;
 	text-align: center;
 	width: 100%;
-  box-sizing: border-box;
+	box-sizing: border-box;
 	text-decoration: none;
 	font-weight: bold;
+	background-color: transparent;
+	color: var(--pricing-table-color);
 }
 
-.promoted .action-button {
+.promoted .wp-block-button .wp-block-button__link {
 	background-color: var(--pricing-table-color);
 	color: var(--wp--preset--color--base);
 	border-color: var(--pricing-table-color);
+}
+
+/* WordPress core list styling within pricing tier */
+.pricing-tier .wp-block-list {
+	margin: 1rem 0;
 }
 
 .best-value-badge {

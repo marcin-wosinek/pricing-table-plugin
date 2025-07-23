@@ -1,31 +1,25 @@
 # Pricing Table Plugin
 
-A modern WordPress block plugin for creating customizable pricing tables using a nested block architecture with WordPress Block API v3.
+A modern WordPress block plugin for creating customizable pricing tables using nested block architecture with WordPress core blocks.
 
 ## Features
 
 - **Nested block structure** - Container (pricing-table) + Individual tiers (pricing-tier)
 - **Up to 3 tiers** with flexible add/remove functionality
+- **WordPress core blocks** - Uses core/button, core/heading, and core/list
 - **Context-based communication** - Global settings flow to child blocks
 - **Unified pricing** - Single price with monthly/yearly billing display
-- **Promoted tier** highlighting with customizable accent colors
-- **Feature management** - Add/remove features per tier with inheritance
+- **Promoted tier** with "Best value" badge and customizable accent colors
 - **Action buttons** positioned below prices with URL controls
 - **Full internationalization** and responsive design
 
 ## Architecture
 
-**Two-Block System:**
+Uses WordPress Block API v3 with `providesContext`/`usesContext` pattern. Container block manages global settings (currency, billing, colors, promoted tier) while individual tier blocks handle content through WordPress core blocks.
 
+**Blocks:**
 - `pricing-table-plugin/pricing-table` - Container with global settings
-- `pricing-table-plugin/pricing-tier` - Individual tier blocks
-
-**Key Technologies:**
-
-- WordPress Block API v3 with `providesContext`/`usesContext`
-- React/JSX with `InnerBlocks` for nesting
-- Dual attribute/context system for editor + save persistence
-- CSS custom properties for dynamic theming
+- `pricing-table-plugin/pricing-tier` - Individual tier with core/button, core/heading, core/list
 
 ## Development
 

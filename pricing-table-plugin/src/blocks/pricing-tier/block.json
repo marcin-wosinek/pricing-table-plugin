@@ -30,21 +30,6 @@
 			"type": "number",
 			"default": 0
 		},
-		"features": {
-			"type": "array",
-			"default": [],
-			"items": {
-				"type": "string"
-			}
-		},
-		"buttonLabel": {
-			"type": "string",
-			"default": "Get Started"
-		},
-		"buttonUrl": {
-			"type": "string",
-			"default": ""
-		},
 		"isPromoted": {
 			"type": "boolean",
 			"default": false

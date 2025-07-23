@@ -21,8 +21,9 @@ function register_pricing_table_blocks() {
     // Register the container block (pricing-table)
     register_block_type( __DIR__ . '/build/blocks/pricing-table/block.json' );
 
-    // Register the child block (pricing-tier)
+    // Register the tier block (pricing-tier)
     register_block_type( __DIR__ . '/build/blocks/pricing-tier/block.json' );
+    
 }
 
 // Register hooks

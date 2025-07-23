@@ -1,4 +1,4 @@
-import { useBlockProps, RichText } from '@wordpress/block-editor';
+import { useBlockProps, RichText, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 export function Save( { attributes } ) {
@@ -7,9 +7,6 @@ export function Save( { attributes } ) {
 		name,
 		description,
 		price,
-		features,
-		buttonLabel,
-		buttonUrl,
 		tierIndex,
 		currency = '$',
 		billing = 'monthly',
@@ -47,44 +44,7 @@ export function Save( { attributes } ) {
 							: __( 'year', 'pricing-table-plugin' ) }
 					</span>
 				</div>
-				{ buttonLabel && (
-					<div className="tier-action">
-						<a
-							href={ buttonUrl || '#' }
-							className="action-button"
-							target={ buttonUrl ? '_blank' : undefined }
-							rel={
-								buttonUrl ? 'noopener noreferrer' : undefined
-							}
-						>
-							{ buttonLabel }
-						</a>
-					</div>
-				) }
-				{ features && features.length > 0 && (
-					<>
-						<h4 className="features-header">
-							{ tierIndex === 0
-								? __( 'Key Features:', 'pricing-table-plugin' )
-								: __(
-										'Additional Features:',
-										'pricing-table-plugin'
-								  ) }
-						</h4>
-						<ul className="tier-features">
-							{ ( features || [] ).map(
-								( feature, featureIndex ) => (
-									<li
-										key={ featureIndex }
-										className="feature-item"
-									>
-										{ feature }
-									</li>
-								)
-							) }
-						</ul>
-					</>
-				) }
+				<InnerBlocks.Content />
 			</div>
 		</div>
 	);

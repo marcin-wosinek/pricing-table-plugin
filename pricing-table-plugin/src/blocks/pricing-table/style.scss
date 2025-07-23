@@ -3,14 +3,36 @@
  */
 
 .pricing-table {
-	display: flex;
-	gap: 1rem;
-	flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier {
-	flex: 1;
-	min-width: 250px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.pricing-table {
+  container-type: inline-size;
+}
+
+.pricing-table .wp-block-pricing-table-plugin-pricing-tier {
+  align-self: stretch;
+}
+
+.pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
+  /* Only move to top when items wrap to multiple lines */
+  order: 0;
+}
+
+/* When container is too narrow for all items in one line, move promoted to top */
+@container (max-width: calc(3 * 250px + 2 * 1rem)) {
+  .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
+    order: -1;
+    min-width: calc(2 * 250px + 1rem);
+  }
 }
 
 // edit time
@@ -18,91 +40,91 @@
   margin: 1rem 0;
 }
 
-.pricing-tier {
-	flex: 1;
-	min-width: 250px;
-	padding: 1.5rem;
-	border: 3px solid #ddd;
-	border-radius: 1.2rem;
+.wp-block-pricing-table-plugin-pricing-tier {
+  padding: 1.5rem;
+  border: 3px solid #ddd;
+  border-radius: 1.2rem;
 }
 
-.pricing-tier.promoted {
-	border-color: var(--pricing-table-color, #007cba);
+.wp-block-pricing-table-plugin-pricing-tier.promoted {
+  border-color: var(--pricing-table-color, #007cba);
 }
 
 .tier-price {
-	display: flex;
-	align-items: center;
-	gap: 0.25rem;
-	margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .price {
-	font-size: 2em;
-	font-weight: bold;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .billing-period {
-	font-size: 0.875em;
-	opacity: 0.7;
+  font-size: 0.875em;
+  opacity: 0.7;
 }
 
 .tier-features {
-	margin: 1rem 0;
+  margin: 1rem 0;
 }
 
 .remove-feature {
-	color: #cc1818;
-	min-width: 24px;
-	height: 24px;
+  color: #cc1818;
+  min-width: 24px;
+  height: 24px;
 }
 
 /* WordPress core button styling within pricing tier */
-.pricing-tier .wp-block-button {
-	margin-top: 1rem;
+.wp-block-pricing-table-plugin-pricing-tier .wp-block-button {
+  margin-top: 1rem;
 }
 
-.pricing-tier .wp-block-button .wp-block-button__link {
-	display: inline-block;
-	padding: 1rem;
-	border: 3px solid var(--pricing-table-color);
-	border-radius: 0.5rem;
-	text-align: center;
-	width: 100%;
-	box-sizing: border-box;
-	text-decoration: none;
-	font-weight: bold;
-	background-color: transparent;
-	color: var(--pricing-table-color);
+.wp-block-pricing-table-plugin-pricing-tier
+  .wp-block-button
+  .wp-block-button__link {
+  display: inline-block;
+  padding: 1rem;
+  border: 3px solid var(--pricing-table-color);
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: bold;
+  background-color: transparent;
+  color: var(--pricing-table-color);
 }
 
 .promoted .wp-block-button .wp-block-button__link {
-	background-color: var(--pricing-table-color);
-	color: var(--wp--preset--color--base);
-	border-color: var(--pricing-table-color);
+  background-color: var(--pricing-table-color);
+  color: var(--wp--preset--color--base);
+  border-color: var(--pricing-table-color);
 }
 
 /* WordPress core list styling within pricing tier */
-.pricing-tier .wp-block-list {
-	margin: 1rem 0;
+.wp-block-pricing-table-plugin-pricing-tier .wp-block-list {
+  margin: 1rem 0;
 }
 
 .best-value-badge {
-	position: absolute;
-	top: 0;
-	right: 0;
-	background-color: var(--pricing-table-color);
-	color: white;
-	padding: 0.5rem 1rem;
-	border-radius: 0 1rem;
-	font-size: 0.75rem;
-	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	white-space: nowrap;
-	z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--pricing-table-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  z-index: 1;
 }
 
-.pricing-tier {
-	position: relative;
+.wp-block-pricing-table-plugin-pricing-tier {
+  position: relative;
 }

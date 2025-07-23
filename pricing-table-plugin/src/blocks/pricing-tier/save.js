@@ -26,6 +26,11 @@ export function Save( { attributes } ) {
 				}` }
 				style={ { '--pricing-table-color': color } }
 			>
+				{ isCurrentlyPromoted && (
+					<div className="best-value-badge">
+						{ __( 'Best value', 'pricing-table-plugin' ) }
+					</div>
+				) }
 				<h3 className="tier-name">{ name }</h3>
 				<RichText.Content
 					tagName="p"

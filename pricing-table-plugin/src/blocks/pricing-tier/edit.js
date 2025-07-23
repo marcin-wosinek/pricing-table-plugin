@@ -72,6 +72,11 @@ export function Edit( { attributes, setAttributes, context } ) {
 				}` }
 				style={ { '--pricing-table-color': color } }
 			>
+				{ isCurrentlyPromoted && (
+					<div className="best-value-badge">
+						{ __( 'Best value', 'pricing-table-plugin' ) }
+					</div>
+				) }
 				<PlainText
 					tagName="h3"
 					className="tier-name"

@@ -27,9 +27,14 @@
 
 .tier-price {
 	display: flex;
-	align-items: baseline;
+	align-items: center;
 	gap: 0.25rem;
 	margin-bottom: 1rem;
+}
+
+.price {
+	font-size: 2em;
+	font-weight: bold;
 }
 
 .billing-period {

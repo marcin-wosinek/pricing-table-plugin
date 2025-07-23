@@ -1,53 +1,42 @@
 # Pricing Table Plugin
 
-A modern WordPress block plugin for creating customizable pricing tables with multiple tiers, built with WordPress Block API v3.
+A modern WordPress block plugin for creating customizable pricing tables using a nested block architecture with WordPress Block API v3.
 
 ## Features
 
-- **Multi-tier pricing tables** with up to 3 customizable tiers
-- **Dynamic pricing** with editable prices and currency selection  
-- **Feature management** - add/remove features per tier
-- **Customizable styling** with color picker and promoted tier highlighting
-- **Billing options** - monthly/yearly toggle
-- **Responsive design** with CSS Grid layout
-- **Full internationalization** support
-
-## Technologies
-
-- **WordPress Block API v3** with comprehensive attribute schema
-- **React/JSX** component-based architecture
-- **@wordpress/scripts** build tooling
-- **Custom hooks** for tier state management
-- **Playwright** e2e testing with modular helpers
-- **SCSS** with CSS custom properties for theming
-
-## Development
-
-**Scripts:**
-- `npm start` - Development with hot reloading
-- `npm run build` - Production build
-- `npm test` - Run e2e tests
-- `npm run lint:js` - JavaScript linting
-
-**Local Development:**
-```bash
-docker compose up    # WordPress on localhost:8080
-npm install         # Install dependencies
-npm start          # Start development
-```
+- **Nested block structure** - Container (pricing-table) + Individual tiers (pricing-tier)
+- **Up to 3 tiers** with flexible add/remove functionality
+- **Context-based communication** - Global settings flow to child blocks
+- **Unified pricing** - Single price with monthly/yearly billing display
+- **Promoted tier** highlighting with customizable accent colors
+- **Feature management** - Add/remove features per tier with inheritance
+- **Action buttons** positioned below prices with URL controls
+- **Full internationalization** and responsive design
 
 ## Architecture
 
-- **Component structure:** Separate Edit/Save with reusable TierComponent
-- **State management:** Custom `useTierActions` hook for tier operations
-- **Inspector controls:** Global settings (currency, billing, colors)
-- **Real-time preview** in block editor
-- **Production-ready** with comprehensive testing
+**Two-Block System:**
+
+- `pricing-table-plugin/pricing-table` - Container with global settings
+- `pricing-table-plugin/pricing-tier` - Individual tier blocks
+
+**Key Technologies:**
+
+- WordPress Block API v3 with `providesContext`/`usesContext`
+- React/JSX with `InnerBlocks` for nesting
+- Dual attribute/context system for editor + save persistence
+- CSS custom properties for dynamic theming
+
+## Development
+
+```bash
+docker compose up    # WordPress on localhost:8080
+npm install         # Install dependencies
+npm start          # Development mode
+npm run build      # Production build
+npm test          # E2E tests with Playwright
+```
 
 ## Installation
 
-**WordPress Dashboard:** Upload `pricing-table-plugin.zip` via Plugins → Add New
-
-**Manual:** Extract to `wp-content/plugins/` and activate
-
-**Git:** `git clone` into plugins directory
+Upload via WordPress Dashboard → Plugins → Add New, or extract to `wp-content/plugins/` and activate.

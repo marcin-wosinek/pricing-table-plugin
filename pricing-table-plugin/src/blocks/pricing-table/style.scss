@@ -8,6 +8,11 @@
 	flex-wrap: wrap;
 }
 
+.pricing-table .wp-block-pricing-table-plugin-pricing-tier {
+	flex: 1;
+	min-width: 250px;
+}
+
 .pricing-tier {
 	flex: 1;
 	min-width: 250px;

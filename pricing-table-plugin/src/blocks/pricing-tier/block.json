@@ -1,0 +1,75 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pricing-table-plugin/pricing-tier",
+	"title": "Pricing Tier",
+	"category": "widgets",
+	"icon": "tag",
+	"description": "Individual pricing tier with features and call-to-action.",
+	"parent": [ "pricing-table-plugin/pricing-table" ],
+	"supports": {
+		"html": false,
+		"reusable": false
+	},
+	"usesContext": [
+		"pricing-table-plugin/currency",
+		"pricing-table-plugin/billing",
+		"pricing-table-plugin/color",
+		"pricing-table-plugin/promotedTier"
+	],
+	"attributes": {
+		"name": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"price": {
+			"type": "number",
+			"default": 0
+		},
+		"features": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "string"
+			}
+		},
+		"buttonLabel": {
+			"type": "string",
+			"default": "Get Started"
+		},
+		"buttonUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"isPromoted": {
+			"type": "boolean",
+			"default": false
+		},
+		"tierIndex": {
+			"type": "number",
+			"default": 0
+		},
+		"currency": {
+			"type": "string",
+			"default": "$"
+		},
+		"billing": {
+			"type": "string",
+			"default": "monthly"
+		},
+		"color": {
+			"type": "string",
+			"default": "#009344"
+		},
+		"promotedTier": {
+			"type": "number",
+			"default": 1
+		}
+	},
+	"textdomain": "pricing-table-plugin",
+	"script": "file:../../index.js"
+}

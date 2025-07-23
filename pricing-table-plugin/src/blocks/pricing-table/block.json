@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "pricing-table-plugin/pricing-table",
+	"title": "Pricing Table",
+	"category": "widgets",
+	"icon": "table-row-after",
+	"description": "A container for pricing tiers with shared settings.",
+	"allowedBlocks": [ "pricing-table-plugin/pricing-tier" ],
+	"supports": {
+		"html": false,
+		"align": true
+	},
+	"providesContext": {
+		"pricing-table-plugin/currency": "currency",
+		"pricing-table-plugin/billing": "billing",
+		"pricing-table-plugin/color": "color",
+		"pricing-table-plugin/promotedTier": "promotedTier"
+	},
+	"attributes": {
+		"currency": {
+			"type": "string",
+			"default": "$"
+		},
+		"billing": {
+			"type": "string",
+			"default": "monthly"
+		},
+		"color": {
+			"type": "string",
+			"default": "#009344"
+		},
+		"promotedTier": {
+			"type": "number",
+			"default": 1
+		}
+	},
+	"textdomain": "pricing-table-plugin",
+	"script": "file:../../index.js",
+	"style": "file:../../style-index.css"
+}

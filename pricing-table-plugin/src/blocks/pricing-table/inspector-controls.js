@@ -6,7 +6,7 @@ import {
 	SelectControl,
 	ColorPicker,
 } from '@wordpress/components';
-import { BILLING_OPTIONS } from './utils/constants.js';
+import { BILLING_OPTIONS } from '../../shared/utils/constants.js';
 
 export function PricingTableInspectorControls( {
 	currency,
@@ -39,17 +39,19 @@ export function PricingTableInspectorControls( {
 					} ) ) }
 					onChange={ updateBilling }
 				/>
-				<SelectControl
-					label={ __( 'Promoted Tier', 'pricing-table-plugin' ) }
-					value={ promotedTier.toString() }
-					options={ tiers.map( ( tier, index ) => ( {
-						label: tier.name || `Tier ${ index + 1 }`,
-						value: index.toString(),
-					} ) ) }
-					onChange={ ( value ) =>
-						setPromotedTier( parseInt( value ) )
-					}
-				/>
+				{ tiers && tiers.length > 0 && (
+					<SelectControl
+						label={ __( 'Promoted Tier', 'pricing-table-plugin' ) }
+						value={ promotedTier.toString() }
+						options={ tiers.map( ( tier, index ) => ( {
+							label: tier.name || `Tier ${ index + 1 }`,
+							value: index.toString(),
+						} ) ) }
+						onChange={ ( value ) =>
+							setPromotedTier( parseInt( value ) )
+						}
+					/>
+				) }
 				<div style={ { marginTop: '16px' } }>
 					<label
 						style={ {

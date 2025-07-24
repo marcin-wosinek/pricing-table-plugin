@@ -1,0 +1,84 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    branches:
+      - main
+      - CI-build
+    inputs:
+      version:
+        description: 'Version for test release (e.g., v1.0.0-test)'
+        required: true
+        default: 'v1.0.0-test'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, intl, zip
+        coverage: none
+
+    - name: Validate composer.json and composer.lock
+      working-directory: ./pricing-table-plugin
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v3
+      with:
+        path: ./pricing-table-plugin/vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install PHP dependencies
+      working-directory: ./pricing-table-plugin
+      run: composer install --prefer-dist --no-progress
+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    - name: Install Node.js dependencies
+      working-directory: ./pricing-table-plugin
+      run: npm ci
+
+    - name: Build block assets
+      working-directory: ./pricing-table-plugin
+      run: npm run build
+
+    - name: Create plugin ZIP
+      run: |
+        cd pricing-table-plugin
+        zip -r ../pricing-table-plugin.zip . \
+          -x "node_modules/*" \
+          -x ".git/*" \
+          -x "src/*" \
+          -x "tests/*" \
+          -x "test-results/*" \
+          -x "playwright-report/*" \
+          -x "package*.json" \
+          -x "playwright.config.js" \
+          -x "*.md"
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: pricing-table-plugin.zip
+        generate_release_notes: true
+        draft: ${{ github.event_name == 'workflow_dispatch' }}
+        prerelease: ${{ github.event_name == 'workflow_dispatch' }}
+        tag_name: ${{ github.event.inputs.version || github.ref_name }}
+        name: ${{ github.event.inputs.version || github.ref_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

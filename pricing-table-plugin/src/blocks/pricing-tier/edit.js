@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import { PlainText, RichText } from '@wordpress/block-editor';
+import { PlainText } from '@wordpress/block-editor';
 
 const TEMPLATE = [
 	[
@@ -88,7 +88,7 @@ export function Edit( { attributes, setAttributes, context } ) {
 					'pricing-table-plugin'
 				) }
 			/>
-			<RichText
+			<PlainText
 				tagName="p"
 				className="tier-description"
 				value={ description }

@@ -1,4 +1,4 @@
-import { useBlockProps, RichText, InnerBlocks } from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 export function Save( { attributes } ) {
@@ -28,11 +28,7 @@ export function Save( { attributes } ) {
 				</div>
 			) }
 			<h3 className="tier-name">{ name }</h3>
-			<RichText.Content
-				tagName="p"
-				className="tier-description"
-				value={ description }
-			/>
+			<p className="tier-description">{ description }</p>
 			<div className="tier-price">
 				<span className="currency">{ currency }</span>
 				<span className="price">{ price }</span>

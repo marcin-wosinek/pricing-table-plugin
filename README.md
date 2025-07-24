@@ -40,6 +40,19 @@ npm run build        # Production build
 npm test             # E2E tests with Playwright
 ```
 
+## Accessibility & Data Sanitization
+
+This plugin leverages WordPress core components and nested blocks to ensure
+proper accessibility and data sanitization. By using native WordPress blocks
+(`core/button`, `core/heading`, `core/list`) and WordPress block editor
+components (`PlainText`, `InnerBlocks`), the plugin inherits WordPress's
+built-in accessibility features, ARIA attributes, and data validation. This
+approach ensures compliance with web accessibility standards and secure data
+handling without requiring custom sanitization logic.
+
 ## Installation
 
-Download the latest release from [GitHub Releases](https://github.com/marcin-wosinek/pricing-table-plugin/releases), then upload via WordPress Dashboard → Plugins → Add New, or extract to `wp-content/plugins/` and activate.
+Download the latest release from [GitHub
+Releases](https://github.com/marcin-wosinek/pricing-table-plugin/releases),
+then upload via WordPress Dashboard → Plugins → Add New, or extract to
+`wp-content/plugins/` and activate.

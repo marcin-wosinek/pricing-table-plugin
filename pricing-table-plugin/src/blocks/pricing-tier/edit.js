@@ -35,21 +35,18 @@ export function Edit( { attributes, setAttributes, context } ) {
 		tierIndex,
 		currency: savedCurrency,
 		billing: savedBilling,
-		color: savedColor,
 		promotedTier: savedPromotedTier,
 	} = attributes;
 
 	const {
 		'pricing-table-plugin/currency': contextCurrency,
 		'pricing-table-plugin/billing': contextBilling,
-		'pricing-table-plugin/color': contextColor,
 		'pricing-table-plugin/promotedTier': contextPromotedTier,
 	} = context || {};
 
 	// Use context values if available, otherwise fall back to saved attributes
 	const currency = contextCurrency || savedCurrency || '$';
 	const billing = contextBilling || savedBilling || 'monthly';
-	const color = contextColor || savedColor || '#009344';
 	const promotedTier =
 		contextPromotedTier !== undefined
 			? contextPromotedTier

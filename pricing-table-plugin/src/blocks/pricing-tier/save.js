@@ -10,7 +10,6 @@ export function Save( { attributes } ) {
 		tierIndex,
 		currency = '$',
 		billing = 'monthly',
-		color = '#009344',
 		promotedTier = -1,
 	} = attributes;
 	const isCurrentlyPromoted = promotedTier === tierIndex;

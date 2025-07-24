@@ -19,7 +19,7 @@ blocks.
 
 ![Block configuration](block-configuration.png)
 
-![Action button](action.png)
+![Action button](action-button.png)
 
 ![Feature list](list.png)
 

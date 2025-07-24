@@ -53,10 +53,18 @@ export function Edit( { attributes, setAttributes, clientId } ) {
 
 	// Extract tier information from inner blocks and update tier indices
 	const tiers = innerBlocks.map( ( block, index ) => {
+		const oldTierIndex = block.attributes?.tierIndex;
+		const isPromoted = block.attributes?.isPromoted;
+
 		// Update tierIndex if it doesn't match the current position
-		if ( block.attributes?.tierIndex !== index ) {
+		if ( oldTierIndex !== index ) {
 			// This will update the block's tierIndex to match its position
 			updateBlockAttributes( block.clientId, { tierIndex: index } );
+		}
+
+		// If this tier was promoted (isPromoted: true), update parent's promotedTier to new index
+		if ( isPromoted && promotedTier !== index ) {
+			setAttributes( { promotedTier: index } );
 		}
 
 		return {

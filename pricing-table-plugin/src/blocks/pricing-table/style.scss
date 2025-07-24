@@ -2,16 +2,21 @@
  * Pricing Table Block Styles
  */
 
+:root {
+  --pricing-tier-min-width: 250px;
+  --pricing-tier-gap: 1rem;
+}
+
 .pricing-table {
   display: flex;
-  gap: 1rem;
+  gap: var(--pricing-tier-gap);
   flex-wrap: wrap;
   align-items: stretch;
 }
 
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier {
   flex: 1;
-  min-width: 250px;
+  min-width: var(--pricing-tier-min-width);
 }
 
 .pricing-table {
@@ -28,16 +33,16 @@
 }
 
 /* When container is too narrow for all items in one line, move promoted to top */
-@container (max-width: calc(3 * 250px + 2 * 1rem)) {
+@container (max-width: calc(3 * var(--pricing-tier-min-width) + 2 * var(--pricing-tier-gap))) {
   .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
     order: -1;
-    min-width: calc(2 * 250px + 1rem);
+    min-width: calc(2 * var(--pricing-tier-min-width) + var(--pricing-tier-gap));
   }
 }
 
 // edit time
 .block-editor-block-list__layout .wp-block-pricing-table-plugin-pricing-tier {
-  margin: 1rem 0;
+  margin: var(--pricing-tier-gap) 0;
 }
 
 .wp-block-pricing-table-plugin-pricing-tier {

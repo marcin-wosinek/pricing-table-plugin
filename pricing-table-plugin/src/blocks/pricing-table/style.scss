@@ -3,19 +3,17 @@
  */
 
 /* ========================================
-   CSS Variables
+   SCSS Variables
 ======================================== */
-:root {
-  --pricing-tier-min-width: 250px;
-  --pricing-tier-gap: 1rem;
-}
+$pricing-tier-min-width: 250px;
+$pricing-tier-gap: 1rem;
 
 /* ========================================
    Container Block (.pricing-table)
 ======================================== */
 .pricing-table {
   display: flex;
-  gap: var(--pricing-tier-gap);
+  gap: $pricing-tier-gap;
   flex-wrap: wrap;
   align-items: stretch;
   container-type: inline-size;
@@ -26,49 +24,41 @@
 ======================================== */
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier {
   flex: 1;
-  min-width: var(--pricing-tier-min-width);
   align-self: stretch;
+
+  @container (width > calc(#{$pricing-tier-min-width})) {
+    min-width: $pricing-tier-min-width;
+  }
 }
 
 /* ========================================
    Promoted Tier Responsive Behavior
 ======================================== */
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
-  order: 0; /* Keep in natural order by default */
-}
+  order: -1;
 
-/* When container is too narrow for all items in one line, move promoted to top */
-@container (max-width: calc(3 * var(--pricing-tier-min-width) + 2 * var(--pricing-tier-gap))) {
-  .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
-    order: -1;
-    min-width: calc(2 * var(--pricing-tier-min-width) + var(--pricing-tier-gap));
+  /* Container wider than 2 tier widths + 1 gap (501px) */
+  @container (width > calc(2 * #{$pricing-tier-min-width} + #{$pricing-tier-gap})) {
+    min-width: calc(2 * #{$pricing-tier-min-width} + #{$pricing-tier-gap});
+  }
+
+  /* Container wider than 3 tier widths + 2 gaps (752px) */
+  @container (width > calc(3 * #{$pricing-tier-min-width} + 2 * #{$pricing-tier-gap})) {
+    min-width: $pricing-tier-min-width;
+    order: 0;
   }
 }
 
 .wp-block-pricing-table-plugin-pricing-tier {
-  position: relative;
-  padding: 1.5rem;
-  border: 3px solid #ddd;
   border-radius: 1.2rem;
+  border: 3px solid #ddd;
+  box-sizing: border-box;
+  padding: 1.5rem;
+  position: relative;
 }
 
 .wp-block-pricing-table-plugin-pricing-tier.promoted {
   border-color: var(--pricing-table-color, #007cba);
-}
-
-/* ========================================
-   Promoted Tier Responsive Behavior
-======================================== */
-.pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
-  order: 0; /* Keep in natural order by default */
-}
-
-/* When container is too narrow for all items in one line, move promoted to top */
-@container (max-width: calc(3 * var(--pricing-tier-min-width) + 2 * var(--pricing-tier-gap))) {
-  .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
-    order: -1;
-    min-width: calc(2 * var(--pricing-tier-min-width) + var(--pricing-tier-gap));
-  }
 }
 
 /* ========================================
@@ -95,12 +85,6 @@
   margin: 1rem 0;
 }
 
-.remove-feature {
-  color: #cc1818;
-  min-width: 24px;
-  height: 24px;
-}
-
 .best-value-badge {
   position: absolute;
   top: 0;
@@ -120,7 +104,6 @@
 /* ========================================
    WordPress Core Block Overrides
 ======================================== */
-/* Button Block */
 .wp-block-pricing-table-plugin-pricing-tier .wp-block-button {
   margin-top: 1rem;
 }
@@ -145,14 +128,13 @@
   border-color: var(--pricing-table-color);
 }
 
-/* List Block */
+/* ========================================
+   Editor-Only Styles
+======================================== */
 .wp-block-pricing-table-plugin-pricing-tier .wp-block-list {
   margin: 1rem 0;
 }
 
-/* ========================================
-   Editor-Only Styles
-======================================== */
 .block-editor-block-list__layout .wp-block-pricing-table-plugin-pricing-tier {
-  margin: var(--pricing-tier-gap) 0;
+  margin: $pricing-tier-gap 0;
 }

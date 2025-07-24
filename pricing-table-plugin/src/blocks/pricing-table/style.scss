@@ -2,34 +2,39 @@
  * Pricing Table Block Styles
  */
 
+/* ========================================
+   CSS Variables
+======================================== */
 :root {
   --pricing-tier-min-width: 250px;
   --pricing-tier-gap: 1rem;
 }
 
+/* ========================================
+   Container Block (.pricing-table)
+======================================== */
 .pricing-table {
   display: flex;
   gap: var(--pricing-tier-gap);
   flex-wrap: wrap;
   align-items: stretch;
-}
-
-.pricing-table .wp-block-pricing-table-plugin-pricing-tier {
-  flex: 1;
-  min-width: var(--pricing-tier-min-width);
-}
-
-.pricing-table {
   container-type: inline-size;
 }
 
+/* ========================================
+   WordPress Block Wrapper (.wp-block-pricing-table-plugin-pricing-tier)
+======================================== */
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier {
+  flex: 1;
+  min-width: var(--pricing-tier-min-width);
   align-self: stretch;
 }
 
+/* ========================================
+   Promoted Tier Responsive Behavior
+======================================== */
 .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
-  /* Only move to top when items wrap to multiple lines */
-  order: 0;
+  order: 0; /* Keep in natural order by default */
 }
 
 /* When container is too narrow for all items in one line, move promoted to top */
@@ -40,12 +45,8 @@
   }
 }
 
-// edit time
-.block-editor-block-list__layout .wp-block-pricing-table-plugin-pricing-tier {
-  margin: var(--pricing-tier-gap) 0;
-}
-
 .wp-block-pricing-table-plugin-pricing-tier {
+  position: relative;
   padding: 1.5rem;
   border: 3px solid #ddd;
   border-radius: 1.2rem;
@@ -55,6 +56,24 @@
   border-color: var(--pricing-table-color, #007cba);
 }
 
+/* ========================================
+   Promoted Tier Responsive Behavior
+======================================== */
+.pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
+  order: 0; /* Keep in natural order by default */
+}
+
+/* When container is too narrow for all items in one line, move promoted to top */
+@container (max-width: calc(3 * var(--pricing-tier-min-width) + 2 * var(--pricing-tier-gap))) {
+  .pricing-table .wp-block-pricing-table-plugin-pricing-tier.promoted {
+    order: -1;
+    min-width: calc(2 * var(--pricing-tier-min-width) + var(--pricing-tier-gap));
+  }
+}
+
+/* ========================================
+   Tier Content Components
+======================================== */
 .tier-price {
   display: flex;
   align-items: center;
@@ -82,14 +101,31 @@
   height: 24px;
 }
 
-/* WordPress core button styling within pricing tier */
+.best-value-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--pricing-table-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* ========================================
+   WordPress Core Block Overrides
+======================================== */
+/* Button Block */
 .wp-block-pricing-table-plugin-pricing-tier .wp-block-button {
   margin-top: 1rem;
 }
 
-.wp-block-pricing-table-plugin-pricing-tier
-  .wp-block-button
-  .wp-block-button__link {
+.wp-block-pricing-table-plugin-pricing-tier .wp-block-button .wp-block-button__link {
   display: inline-block;
   padding: 1rem;
   border: 3px solid var(--pricing-table-color);
@@ -109,27 +145,14 @@
   border-color: var(--pricing-table-color);
 }
 
-/* WordPress core list styling within pricing tier */
+/* List Block */
 .wp-block-pricing-table-plugin-pricing-tier .wp-block-list {
   margin: 1rem 0;
 }
 
-.best-value-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: var(--pricing-table-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0 1rem;
-  font-size: 0.75rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  z-index: 1;
-}
-
-.wp-block-pricing-table-plugin-pricing-tier {
-  position: relative;
+/* ========================================
+   Editor-Only Styles
+======================================== */
+.block-editor-block-list__layout .wp-block-pricing-table-plugin-pricing-tier {
+  margin: var(--pricing-tier-gap) 0;
 }

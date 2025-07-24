@@ -62,8 +62,7 @@ export function Edit({ attributes, setAttributes, context }) {
   const updateName = (value) => setAttributes({ name: value });
   const updateDescription = (value) => setAttributes({ description: value });
   const updatePrice = (value) => {
-    const numValue = parseFloat(value) || 0;
-    setAttributes({ price: numValue });
+    setAttributes({ price: value });
   };
 
   return (

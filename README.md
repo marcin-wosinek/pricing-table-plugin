@@ -42,5 +42,4 @@ npm test             # E2E tests with Playwright
 
 ## Installation
 
-Upload via WordPress Dashboard → Plugins → Add New, or extract to
-`wp-content/plugins/` and activate.
+Download the latest release from [GitHub Releases](https://github.com/marcin-wosinek/pricing-table-plugin/releases), then upload via WordPress Dashboard → Plugins → Add New, or extract to `wp-content/plugins/` and activate.

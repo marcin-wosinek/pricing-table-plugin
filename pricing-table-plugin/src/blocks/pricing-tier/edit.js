@@ -21,7 +21,7 @@ const TEMPLATE = [
 	[
 		'core/list',
 		{
-			values: '',
+			values: '<li>Feature one</li><li>Feature two</li><li>Feature three</li>',
 		},
 	],
 ];

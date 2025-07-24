@@ -1,6 +1,5 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import { Button } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { PricingTableInspectorControls } from './inspector-controls.js';
@@ -9,18 +8,18 @@ const TEMPLATE = [
 	[
 		'pricing-table-plugin/pricing-tier',
 		{
-			name: 'Basic',
-			description: 'Perfect for getting started',
-			price: 9.99,
+			name: 'Starter',
+			description: 'Perfect for individuals and small projects',
+			price: 15,
 			tierIndex: 0,
 		},
 	],
 	[
 		'pricing-table-plugin/pricing-tier',
 		{
-			name: 'Pro',
-			description: 'For growing businesses',
-			price: 19.99,
+			name: 'Professional',
+			description: 'Best for growing teams and businesses',
+			price: 35,
 			tierIndex: 1,
 			isPromoted: true,
 		},
@@ -29,8 +28,8 @@ const TEMPLATE = [
 		'pricing-table-plugin/pricing-tier',
 		{
 			name: 'Enterprise',
-			description: 'For large organizations',
-			price: 49.99,
+			description: 'Advanced features for large organizations',
+			price: 75,
 			tierIndex: 2,
 		},
 	],
